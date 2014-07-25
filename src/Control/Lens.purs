@@ -4,8 +4,15 @@ module Control.Lens
   -- Lens
   , lens
   -- Setter
+  , (%~), (.~), (+~), (-~), (*~), (/~), (||~), (&&~), (<>~), (++~), (?~)
+  , argument
+  , contramapped
+  , mapped
+  , over
   , set
-  ) where
+  , set'
+  , sets
+  )  where
 
   import qualified Control.Lens.Getter as CLG
   import qualified Control.Lens.Lens as CLL
@@ -18,4 +25,22 @@ module Control.Lens
   lens = CLL.lens
 
   -- Setter
-  set = CLS.set
+  (%~)         = CLS.(%~)
+  (.~)         = CLS.(.~)
+  (+~)         = CLS.(+~)
+  (-~)         = CLS.(-~)
+  (*~)         = CLS.(*~)
+  (/~)         = CLS.(/~)
+  (||~)        = CLS.(||~)
+  (&&~)        = CLS.(&&~)
+  (<>~)        = CLS.(<>~)
+  (++~)        = CLS.(++~)
+  (?~)         = CLS.(?~)
+  argument     = CLS.argument
+  contramapped = CLS.contramapped
+  mapped       = CLS.mapped
+  over         = CLS.over
+  set          = CLS.set
+  set'         = CLS.set'
+  sets         = CLS.sets
+
