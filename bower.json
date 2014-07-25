@@ -1,0 +1,10 @@
+{
+  "name": "purescript-lens",
+  "version": "0.0.0",
+  "description": "PureScript implementation of Lens.",
+  "license": "MIT",
+  "dependencies": {
+    "purescript-transformers": "~0.0.4",
+    "purescript-foldable-traversable": "~0.1.3"
+  }
+}
