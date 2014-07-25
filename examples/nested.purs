@@ -9,13 +9,13 @@ module Nested where
     }
 
   baz :: LensP Foo Boolean
-  baz f obj = (\baz -> obj{_baz = baz}) <$> f obj._baz
+  baz f {_foo = _f, _baz = b} = (\baz -> {_foo: _f, _baz: baz}) <$> f b
 
   foo :: LensP Foo {_bar :: Number}
-  foo f obj = (\foo -> obj{_foo = foo}) <$> f obj._foo
+  foo f {_foo = {_bar = n}, _baz = b} = (\foo -> {_foo: foo, _baz: b}) <$> f {_bar: n}
 
   bar :: LensP {_bar :: Number} Number
-  bar f obj = (\bar -> obj{_bar = bar}) <$> f obj._bar
+  bar f {_bar = n} = (\bar -> {_bar: bar}) <$> f n
 
   fooBar :: LensP Foo Number
   fooBar = foo <<< bar
