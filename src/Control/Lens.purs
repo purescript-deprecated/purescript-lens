@@ -1,6 +1,7 @@
 module Control.Lens
+  ( (..)
   -- Getter
-  ( (^.)
+  , (^.)
   , view
   -- Lens
   , lens
@@ -54,3 +55,5 @@ module Control.Lens
   _1 = CLT._1
   _2 = CLT._2
 
+  infixr 9 ..
+  (..) = (<<<)
