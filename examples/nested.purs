@@ -1,7 +1,6 @@
 module Nested where
 
   import Control.Lens
-  import Control.Lens.Type
 
   import Debug.Trace
 
@@ -28,7 +27,7 @@ module Nested where
 
   main = do
     trace $ showFooImpl obj
-    trace $ showFooImpl ((baz.~10) obj)
-    trace $ showFooImpl ((foo..bar.~10) obj)
-    trace $ showFooImpl ((foo..bar+~40) obj)
-    trace $ showFooImpl (obj^.(foo..bar))
+    trace $ showFooImpl $ baz.~10 $ obj
+    trace $ showFooImpl $ foo..bar.~10 $ obj
+    trace $ showFooImpl $ foo..bar+~40 $ obj
+    trace $ showFooImpl $ obj^.foo..bar

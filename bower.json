@@ -3,6 +3,25 @@
   "version": "0.0.0",
   "description": "PureScript implementation of Lens.",
   "license": "MIT",
+  "homepage": "https://github.com/joneshf/purescript-lens",
+  "keywords": [
+    "PureScript",
+    "lens"
+  ],
+  "authors": [
+    "Hardy Jones <jones3.hardy@gmail.com> (https://github.com/joneshf)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joneshf/purescript-lens.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
     "purescript-transformers": "~0.0.4",
     "purescript-foldable-traversable": "~0.1.3",

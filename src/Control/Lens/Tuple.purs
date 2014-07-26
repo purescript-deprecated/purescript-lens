@@ -1,5 +1,6 @@
 module Control.Lens.Tuple
-  ( _1
+  ( (~)
+  , _1
   , _2
   ) where
 
@@ -7,6 +8,11 @@ module Control.Lens.Tuple
   import Control.Lens.Type (Lens())
 
   import Data.Tuple (Tuple(..))
+
+  infixr 6 ~
+
+  (~) :: forall a b. a -> b -> Tuple a b
+  (~) = Tuple
 
   -- Actually, these don't compose at all. They also lose inference.
   -- -- There's some issue where PS can't infer the constraints properly.
