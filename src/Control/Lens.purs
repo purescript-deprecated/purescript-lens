@@ -6,6 +6,13 @@ module Control.Lens
   , view
   -- Lens
   , lens
+  -- Prism
+  , prism
+  , prism'
+  , _Left
+  , _Right
+  , _Just
+  , _Nothing
   -- Setter
   , (%~), (.~), (+~), (-~), (*~), (/~), (||~), (&&~), (<>~), (++~), (?~)
   , argument
@@ -36,6 +43,7 @@ module Control.Lens
 
   import qualified Control.Lens.Getter as CLG
   import qualified Control.Lens.Lens as CLL
+  import qualified Control.Lens.Prism as CLP
   import qualified Control.Lens.Setter as CLS
   import qualified Control.Lens.Tuple as CLT
   import qualified Control.Lens.Type as Type
@@ -48,6 +56,14 @@ module Control.Lens
 
   -- Lens
   lens = CLL.lens
+
+  -- Prism
+  prism    = CLP.prism
+  prism'   = CLP.prism'
+  _Left    = CLP._Left
+  _Right   = CLP._Right
+  _Just    = CLP._Just
+  _Nothing = CLP._Nothing
 
   -- Setter
   infixr 4 %~

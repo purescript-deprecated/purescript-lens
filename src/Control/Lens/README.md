@@ -71,9 +71,9 @@
 
     contramapped :: forall f a b. (Contravariant f) => Setter (f a) (f b) b a
 
-    mapped :: forall f a b. (Functor f, Settable f) => (a -> f b) -> f a -> f (f b)
+    mapped :: forall f a b. (Functor f) => Setter (f a) (f b) a b
 
-    over :: forall p s t a b. (Profunctor p) => (p a (Identity b) -> s -> Identity t) -> p a b -> s -> t
+    over :: forall p s t a b. (Profunctor p) => Setting p s t a b -> p a b -> s -> t
 
     set :: forall s t a b. ASetter s t a b -> b -> s -> t
 
