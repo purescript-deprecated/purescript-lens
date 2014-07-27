@@ -1,4 +1,4 @@
-module Nested where
+module Examples.Nested where
 
   import Control.Lens
 
@@ -9,16 +9,17 @@ module Nested where
     , baz :: Boolean
     }
 
-  foo :: forall s t a b r. Lens {foo :: a | r} {foo :: b | r} a b
-  foo a2fb obj = (\foo -> obj{foo = foo}) <$> a2fb obj.foo
-
-  bar :: forall s t a b r. Lens {bar :: a | r} {bar :: b | r} a b
-  bar a2fb obj = (\bar -> obj{bar = bar}) <$> a2fb obj.bar
-
-  baz :: forall s t a b r. Lens {baz :: a | r} {baz :: b | r} a b
-  baz a2fb obj = (\baz -> obj{baz = baz}) <$> a2fb obj.baz
+  -- Can't have type signatures if we use the lens function
+  -- foo :: forall s t a b r. Lens {foo :: a | r} {foo :: b | r} a b
+  foo = lens (\o -> o.foo) (\o x -> o{foo = x})
+  -- bar :: forall s t a b r. Lens {bar :: a | r} {bar :: b | r} a b
+  bar = lens (\o -> o.bar) (\o x -> o{bar = x})
+  -- baz :: forall s t a b r. Lens {baz :: a | r} {baz :: b | r} a b
+  baz = lens (\o -> o.baz) (\o x -> o{baz = x})
 
   obj = {foo: {bar: 0}, baz: true}
+
+  succ x = x + 1
 
   foreign import showFooImpl
     "function showFooImpl(foo) {\
@@ -31,3 +32,5 @@ module Nested where
     trace $ showFooImpl $ foo..bar.~10 $ obj
     trace $ showFooImpl $ foo..bar+~40 $ obj
     trace $ showFooImpl $ obj^.foo..bar
+    trace $ showFooImpl (obj#foo..bar%~succ)
+    trace $ showFooImpl (over (foo..bar) succ obj)

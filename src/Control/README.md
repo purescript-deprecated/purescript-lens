@@ -16,9 +16,17 @@
 
     type OpticalP p q f s a = Type.OpticalP p q f s a
 
+    type Prism s t a b = Type.Prism s t a b
+
+    type PrismP s a = Type.PrismP s a
+
     type Setter s t a b = Type.Setter s t a b
 
     type SetterP s a = Type.SetterP s a
+
+    type Traversal s t a b = Type.Traversal s t a b
+
+    type TraversalP s a = Type.TraversalP s a
 
 
 

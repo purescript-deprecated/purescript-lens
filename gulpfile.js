@@ -39,8 +39,13 @@ var compile = function(compiler) {
 
 function docs (target) {
     return function() {
+        var docgen = purescript.docgen();
+        docgen.on('error', function(e) {
+            console.error(e.message);
+            docgen.end();
+        });
         return gulp.src(paths.docs[target].src)
-            .pipe(purescript.docgen())
+            .pipe(docgen)
             .pipe(gulp.dest(paths.docs[target].dest));
     }
 }
