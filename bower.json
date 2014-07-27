@@ -27,6 +27,7 @@
     "purescript-foldable-traversable": "~0.1.3",
     "purescript-tuples": "~0.1.2",
     "purescript-profunctor": "~0.0.1",
-    "purescript-distributive": "~0.0.1"
+    "purescript-distributive": "~0.0.1",
+    "purescript-contravariant": "~0.0.1"
   }
 }
