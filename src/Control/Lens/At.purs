@@ -1,4 +1,9 @@
-module Control.Lens.At where
+module Control.Lens.At
+  ( Ixed
+  , Index()
+  , IxValue()
+  , ix
+  ) where
 
   import Control.Lens.Type (TraversalP())
   import Control.Monad.Identity (Identity(..))

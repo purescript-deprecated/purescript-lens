@@ -1,4 +1,6 @@
-module Control.Lens.Fold where
+module Control.Lens.Fold
+  ( filtered
+  ) where
 
   import Control.Lens.Type (OpticP())
 

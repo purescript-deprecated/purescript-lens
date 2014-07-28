@@ -12,6 +12,7 @@ module Control.Lens.Internal.Indexed where
   import Data.Profunctor.Rep (Corepresentable, Representable)
   import Data.Profunctor.Strong (Strong)
   import Data.Traversable (Traversable)
+  import Data.Tuple (snd, Tuple(..))
 
   -- FIXME: Still need to implement `MonadFix` and `ArrowLoop`
   -- before this is actually an okay thing.
@@ -24,7 +25,29 @@ module Control.Lens.Internal.Indexed where
 
   instance conjoinedArr :: Conjoined (->) Identity Identity where
     distrib = (<$>)
-    conjoined _ qa2br = qa2br
+    conjoined qa2br _ = qa2br
+
+  class (Conjoined p f g) <= Indexable i p f g where
+    indexed :: forall a b i. p a b -> i -> a -> b
+
+  instance indexableArr :: Indexable i (->) Identity Identity where
+    indexed a2b _ = a2b
+
+  data Indexing f a = Indexing (Number -> Tuple Number (f a))
+
+  runIndexing :: forall f a. Indexing f a -> Number -> Tuple Number (f a)
+  runIndexing (Indexing f) = f
+
+  -- indexing :: forall f s t a b p g h
+  --          .  (Indexable Number (->) Identity Identity)
+  --          => ((a -> Indexing f b) -> s -> Indexing f t)
+  --          -> (a -> (f b))
+  --          -> s
+  --          -> f t
+  -- indexing f pafb s =
+  --   snd $ runIndexing (f (\a -> Indexing (\n -> Tuple (n + 1) (indexed pafb n a))) s) 0
+
+  -- Orphan instances should be moved where they belong.
 
   instance traversableIdentity :: Traversable Identity where
     traverse a2mb (Identity a) = Identity <$> a2mb a

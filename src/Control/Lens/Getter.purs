@@ -1,5 +1,6 @@
 module Control.Lens.Getter
-  ( Getting()
+  ( Accessing()
+  , Getting()
   , (^.)
   , use
   , view
