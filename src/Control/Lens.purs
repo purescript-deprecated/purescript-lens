@@ -10,6 +10,11 @@ module Control.Lens
   , (^.)
   , use
   , view
+  -- Indexed
+  , imap
+  , ifoldMap
+  , itraverse
+  , itraversed
   -- Lens
   , lens
   -- Prism
@@ -98,6 +103,7 @@ module Control.Lens
   import qualified Control.Lens.At as CLA
   import qualified Control.Lens.Fold as CLF
   import qualified Control.Lens.Getter as CLG
+  import qualified Control.Lens.Indexed as CLI
   import qualified Control.Lens.Lens as CLL
   import qualified Control.Lens.Prism as CLP
   import qualified Control.Lens.Setter as CLS
@@ -115,8 +121,15 @@ module Control.Lens
   -- Getter
   infixl 8 ^.
   (^.) = CLG.(^.)
-  use = CLG.use
+  use  = CLG.use
   view = CLG.view
+
+  -- Indexed
+  imap       = CLI.imap
+  ifoldMap   = CLI.ifoldMap
+  itraverse  = CLI.itraverse
+  itraversed = CLI.itraversed
+
 
   -- Lens
   lens = CLL.lens

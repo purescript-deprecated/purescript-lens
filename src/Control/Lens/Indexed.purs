@@ -2,6 +2,10 @@ module Control.Lens.Indexed
   ( FoldableWithIndex
   , FunctorWithIndex
   , TraversableWithIndex
+  , imap
+  , ifoldMap
+  , itraverse
+  , itraversed
   ) where
 
   import Control.Lens.Internal.Indexed (conjoined, indexed)
