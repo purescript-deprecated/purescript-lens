@@ -2,7 +2,11 @@ module Control.Lens.Type where
 
   import Control.Lens.Internal.Setter (Settable)
 
+  import Data.Profunctor (Profunctor)
   import Data.Profunctor.Choice (Choice)
+
+  type Iso s t a b = forall p f. (Functor f, Profunctor p) => p a (f b) -> p s (f t)
+  type IsoP s a = Iso s s a a
 
   type Lens s t a b = forall f. (Functor f) => (a -> f b) -> s -> f t
   type LensP s a = Lens s s a a

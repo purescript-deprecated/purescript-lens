@@ -1,5 +1,40 @@
 # Module Documentation
 
+## Module Control.Lens.At
+
+### Types
+
+    type Index a b = b
+
+    type IxValue a b = b
+
+
+### Type Classes
+
+    class Ixed m a b where
+      ix :: Index m a -> TraversalP m (IxValue m b)
+
+
+### Type Class Instances
+
+    instance ixedArrEA :: (Eq e) => Ixed (e -> a) e a
+
+    instance ixedArrayNumberA :: Ixed [a] Number a
+
+    instance ixedIdentityAA :: Ixed (Identity a) Unit a
+
+    instance ixedMapKV :: (Ord k) => Ixed (M.Map k v) k v
+
+    instance ixedMaybeUnit :: Ixed (Maybe a) Unit a
+
+
+## Module Control.Lens.Fold
+
+### Values
+
+    filtered :: forall f a p. (Applicative f, Choice p) => (a -> Boolean) -> OpticP p f a a
+
+
 ## Module Control.Lens.Getter
 
 ### Types
@@ -27,7 +62,17 @@
 
 ### Values
 
+    _Just :: forall a b. Prism (Maybe a) (Maybe b) a b
+
+    _Left :: forall a b c. Prism (Either a c) (Either b c) a b
+
+    _Nothing :: forall a b. PrismP (Maybe a) Unit
+
+    _Right :: forall a b c. Prism (Either a b) (Either a c) b c
+
     prism :: forall s t a b. (b -> t) -> (s -> Either t a) -> Prism s t a b
+
+    prism' :: forall s a b. (b -> s) -> (s -> Maybe a) -> Prism s s a b
 
 
 ## Module Control.Lens.Setter
@@ -96,6 +141,10 @@
 ## Module Control.Lens.Type
 
 ### Types
+
+    type Iso s t a b = forall p f. (Functor f, Profunctor p) => p a (f b) -> p s (f t)
+
+    type IsoP s a = Iso s s a a
 
     type Lens s t a b = forall f. (Functor f) => (a -> f b) -> s -> f t
 

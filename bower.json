@@ -29,6 +29,8 @@
     "purescript-profunctor": "~0.0.1",
     "purescript-distributive": "~0.0.1",
     "purescript-contravariant": "~0.0.1",
-    "purescript-const": "~0.0.1"
+    "purescript-const": "~0.0.1",
+    "purescript-maps": "~0.0.4",
+    "purescript-arrows": "~0.1.0"
   }
 }
