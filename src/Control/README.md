@@ -18,7 +18,7 @@
 
     type Getter s a = Type.Getter s a
 
-    type Index a b = CLA.Index a b
+    type Index a b = At.Index a b
 
     type IndexPreservingAction m s a = Type.IndexPreservingAction m s a
 
@@ -84,7 +84,7 @@
 
     type IsoP s a = Type.IsoP s a
 
-    type IxValue a b = CLA.IxValue a b
+    type IxValue a b = At.IxValue a b
 
     type Lens s t a b = Type.Lens s t a b
 

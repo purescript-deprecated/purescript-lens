@@ -68,6 +68,36 @@
       itraversed :: forall a b f. IndexedTraversal i (t a) (t b) a b
 
 
+## Module Control.Lens.Iso
+
+### Types
+
+    type AnIso s t a b = Exchange a b a (Identity b) -> Exchange a b s (Identity t)
+
+    type AnIsoP s a = AnIso s s a a
+
+
+### Values
+
+    au :: forall b e a t s. AnIso s t a b -> ((b -> t) -> e -> s) -> e -> a
+
+    auf :: forall p s t a b e r. (Profunctor p) => AnIso s t a b -> (p r a -> e -> b) -> p r s -> e -> t
+
+    cloneIso :: forall f p s t a b. (Profunctor p, Functor f) => AnIso s t a b -> p a (f b) -> p s (f t)
+
+    enum :: forall a. (Enum a, Monoid a) => IsoP Number a
+
+    from :: forall f p s t a b. (Profunctor p, Functor f) => AnIso s t a b -> p t (f s) -> p b (f a)
+
+    iso :: forall f p s t a b. (Profunctor p, Functor f) => (s -> a) -> (b -> t) -> p a (f b) -> p s (f t)
+
+    mapping :: forall f g p s t a b. (Functor f, Functor g, Profunctor p) => AnIso s t a b -> p (f a) (f (g b)) -> p (f s) (f (g t))
+
+    under :: forall s t a b. AnIso s t a b -> (t -> s) -> b -> a
+
+    withIso :: forall b r a t s. AnIso s t a b -> ((s -> a) -> (b -> t) -> r) -> r
+
+
 ## Module Control.Lens.Lens
 
 ### Values
@@ -76,6 +106,13 @@
 
 
 ## Module Control.Lens.Prism
+
+### Types
+
+    type APrism s t a b = Market a b a (Identity b) -> Market a b s (Identity t)
+
+    type APrismP s a = APrism s s a a
+
 
 ### Values
 
@@ -87,9 +124,13 @@
 
     _Right :: forall a b c. Prism (Either a b) (Either a c) b c
 
-    prism :: forall s t a b. (b -> t) -> (s -> Either t a) -> Prism s t a b
+    clonePrism :: forall f p s t a b. (Applicative f, Choice p) => APrism s t a b -> p a (f b) -> p s (f t)
+
+    prism :: forall f p s t a b. (Applicative f, Choice p) => (b -> t) -> (s -> Either t a) -> p a (f b) -> p s (f t)
 
     prism' :: forall s a b. (b -> s) -> (s -> Maybe a) -> Prism s s a b
+
+    withPrism :: forall b r a t s. APrism s t a b -> ((b -> t) -> (s -> Either t a) -> r) -> r
 
 
 ## Module Control.Lens.Setter

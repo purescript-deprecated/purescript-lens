@@ -15,11 +15,23 @@ module Control.Lens
   , ifoldMap
   , itraverse
   , itraversed
+  -- Iso
+  , au
+  , auf
+  , cloneIso
+  , enum
+  , from
+  , iso
+  , mapping
+  , under
+  , withIso
   -- Lens
   , lens
   -- Prism
+  , clonePrism
   , prism
   , prism'
+  , withPrism
   , _Left
   , _Right
   , _Just
@@ -100,47 +112,60 @@ module Control.Lens
   , Traversal1P()
   )  where
 
-  import qualified Control.Lens.At as CLA
-  import qualified Control.Lens.Fold as CLF
-  import qualified Control.Lens.Getter as CLG
-  import qualified Control.Lens.Indexed as CLI
-  import qualified Control.Lens.Lens as CLL
-  import qualified Control.Lens.Prism as CLP
-  import qualified Control.Lens.Setter as CLS
-  import qualified Control.Lens.Tuple as CLT
+  import qualified Control.Lens.At as At
+  import qualified Control.Lens.Fold as Fold
+  import qualified Control.Lens.Getter as Getter
+  import qualified Control.Lens.Indexed as Indexed
+  import qualified Control.Lens.Iso as Iso
+  import qualified Control.Lens.Lens as Lens
+  import qualified Control.Lens.Prism as Prism
+  import qualified Control.Lens.Setter as Setter
+  import qualified Control.Lens.Tuple as Tuple
   import qualified Control.Lens.Type as Type
 
   -- At
-  type Index a b = CLA.Index a b
-  type IxValue a b = CLA.IxValue a b
-  ix = CLA.ix
+  type Index a b = At.Index a b
+  type IxValue a b = At.IxValue a b
+  ix = At.ix
 
   -- Fold
-  filtered = CLF.filtered
+  filtered = Fold.filtered
 
   -- Getter
   infixl 8 ^.
-  (^.) = CLG.(^.)
-  use  = CLG.use
-  view = CLG.view
+  (^.) = Getter.(^.)
+  use  = Getter.use
+  view = Getter.view
 
   -- Indexed
-  imap       = CLI.imap
-  ifoldMap   = CLI.ifoldMap
-  itraverse  = CLI.itraverse
-  itraversed = CLI.itraversed
+  imap       = Indexed.imap
+  ifoldMap   = Indexed.ifoldMap
+  itraverse  = Indexed.itraverse
+  itraversed = Indexed.itraversed
 
+  -- Iso
+  au       = Iso.au
+  auf      = Iso.auf
+  cloneIso = Iso.cloneIso
+  enum     = Iso.enum
+  from     = Iso.from
+  iso      = Iso.iso
+  mapping  = Iso.mapping
+  under    = Iso.under
+  withIso  = Iso.withIso
 
   -- Lens
-  lens = CLL.lens
+  lens = Lens.lens
 
   -- Prism
-  prism    = CLP.prism
-  prism'   = CLP.prism'
-  _Left    = CLP._Left
-  _Right   = CLP._Right
-  _Just    = CLP._Just
-  _Nothing = CLP._Nothing
+  clonePrism = Prism.clonePrism
+  prism      = Prism.prism
+  prism'     = Prism.prism'
+  withPrism  = Prism.withPrism
+  _Left      = Prism._Left
+  _Right     = Prism._Right
+  _Just      = Prism._Just
+  _Nothing   = Prism._Nothing
 
   -- Setter
   infixr 4 %~
@@ -154,30 +179,30 @@ module Control.Lens
   infixr 4 <>~
   infixr 4 ++~
   infixr 4 ?~
-  (%~)         = CLS.(%~)
-  (.~)         = CLS.(.~)
-  (+~)         = CLS.(+~)
-  (-~)         = CLS.(-~)
-  (*~)         = CLS.(*~)
-  (/~)         = CLS.(/~)
-  (||~)        = CLS.(||~)
-  (&&~)        = CLS.(&&~)
-  (<>~)        = CLS.(<>~)
-  (++~)        = CLS.(++~)
-  (?~)         = CLS.(?~)
-  argument     = CLS.argument
-  contramapped = CLS.contramapped
-  mapped       = CLS.mapped
-  over         = CLS.over
-  set          = CLS.set
-  set'         = CLS.set'
-  sets         = CLS.sets
+  (%~)         = Setter.(%~)
+  (.~)         = Setter.(.~)
+  (+~)         = Setter.(+~)
+  (-~)         = Setter.(-~)
+  (*~)         = Setter.(*~)
+  (/~)         = Setter.(/~)
+  (||~)        = Setter.(||~)
+  (&&~)        = Setter.(&&~)
+  (<>~)        = Setter.(<>~)
+  (++~)        = Setter.(++~)
+  (?~)         = Setter.(?~)
+  argument     = Setter.argument
+  contramapped = Setter.contramapped
+  mapped       = Setter.mapped
+  over         = Setter.over
+  set          = Setter.set
+  set'         = Setter.set'
+  sets         = Setter.sets
 
   -- Tuple
   infixr 6 ~
-  (~) = CLT.(~)
-  _1  = CLT._1
-  _2  = CLT._2
+  (~) = Tuple.(~)
+  _1  = Tuple._1
+  _2  = Tuple._2
 
   infixr 9 ..
   (..) = (<<<)
