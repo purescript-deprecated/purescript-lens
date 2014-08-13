@@ -40,7 +40,7 @@ module Control.Lens.Type where
   type IndexPreservingAction m s a = forall f r p g h. (Conjoined p g h, Effective m r f) => p a (f a) -> p s (f s)
   type IndexPreservingFold s a = forall f p g h. (Conjoined p g h, Contravariant f, Applicative f) => p a (f a) -> p s (f s)
   type IndexPreservingFold1 s a = forall f p g h. (Conjoined p g h, Contravariant f, Apply f) => p a (f a) -> p s (f s)
-  type IndexPreservingGetter s a = forall f p g h. (Conjoined p g h, Contravariant f, Functor f) => p a (f a) -> s -> f s
+  type IndexPreservingGetter s a = forall f p g h. (Conjoined p g h, Contravariant f, Functor f) => p a (f a) -> p s (f s)
   type IndexPreservingLens s t a b = forall f p g h. (Conjoined p g h, Functor f) => p a (f b) -> p s (f t)
   type IndexPreservingLensP s a = IndexPreservingLens s s a a
   type IndexPreservingMonadicFold m s a = forall f r p g h. (Conjoined p g h, Effective m r f, Applicative f) => p a (f a) -> p s (f s)
@@ -69,7 +69,7 @@ module Control.Lens.Type where
   type Optical p q f s t a b = p a (f b) -> q s (f t)
   type OpticalP p q f s a = Optical p q f s s a a
 
-  type Over p f s t a b = p s (f b) -> s -> f t
+  type Over p f s t a b = p a (f b) -> s -> f t
   type OverP p f s a = Over p f s s a a
 
   type Prism s t a b = forall f p. (Applicative f, Choice p) => p a (f b) -> p s (f t)

@@ -15,3 +15,5 @@ module Control.Lens.Examples.Extend where
 
   main = do
     trace $ (fooExt.~"wat") {bar: 3} ^. foo
+    trace $ ((fooExt.~"wat") {bar: 3}). foo
+    trace $ {bar: 3}^.fooExt

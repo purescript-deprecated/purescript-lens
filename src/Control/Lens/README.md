@@ -17,6 +17,8 @@
 
 ### Type Class Instances
 
+    instance containsMapK :: (Ord k) => Contains (S.Set k) k
+
     instance ixedArrEA :: (Eq e) => Ixed (e -> a) e a
 
     instance ixedArrayNumberA :: Ixed [a] Number a
@@ -27,12 +29,31 @@
 
     instance ixedMaybeUnit :: Ixed (Maybe a) Unit a
 
+    instance ixedSetK :: (Ord k) => Ixed (S.Set k) k Unit
+
+
+### Values
+
 
 ## Module Control.Lens.Fold
 
 ### Values
 
+    (^..) :: forall a s. s -> Getting (Endo [a]) s a -> [a]
+
+    (^?) :: forall a s. s -> Getting (First a) s a -> Maybe a
+
     filtered :: forall f a p. (Applicative f, Choice p) => (a -> Boolean) -> OpticP p f a a
+
+    foldMapOf :: forall r a s p. (Profunctor p) => Accessing p r s a -> p a r -> s -> r
+
+    foldOf :: forall a s. Getting a s a -> s -> a
+
+    foldlOf :: forall r a s. Getting (Dual (Endo r)) s a -> (r -> a -> r) -> r -> s -> r
+
+    foldrOf :: forall r a s p. (Profunctor p) => Accessing p (Endo r) s a -> p a (r -> r) -> r -> s -> r
+
+    toListOf :: forall a s. Getting (Endo [a]) s a -> s -> [a]
 
 
 ## Module Control.Lens.Getter
@@ -47,6 +68,8 @@
 ### Values
 
     (^.) :: forall s a. s -> Getting a s a -> a
+
+    to :: forall a s f p. (Conjoined p Identity Identity, Contravariant f, Functor f, Profunctor p) => (s -> a) -> p a (f a) -> p s (f s)
 
     use :: forall s a m. (Monad m, MonadState s m) => Getting a s a -> m a
 
@@ -101,6 +124,12 @@
 ## Module Control.Lens.Lens
 
 ### Values
+
+    (#~) :: forall a s. s -> State s a -> s
+
+    (<#>) :: forall f a b. (Functor f) => f a -> (a -> b) -> f b
+
+    (??) :: forall f a b. (Functor f) => f (a -> b) -> a -> f b
 
     lens :: forall s t a b. (s -> a) -> (s -> b -> t) -> Lens s t a b
 
@@ -187,6 +216,17 @@
 
 ## Module Control.Lens.Traversal
 
+### Values
+
+    both :: forall b a r. (Bitraversable r) => Traversal (r a a) (r b b) a b
+
+    forOf :: forall p f s t a b. Over p f s t a b -> s -> p a (f b) -> f t
+
+    sequenceOf :: forall p f s t a b. LensLike f s t (f b) b -> s -> f t
+
+    traverseOf :: forall p f s t a b. Over p f s t a b -> p a (f b) -> s -> f t
+
+
 ## Module Control.Lens.Tuple
 
 ### Values
@@ -222,7 +262,7 @@
 
     type IndexPreservingFold1 s a = forall f p g h. (Conjoined p g h, Contravariant f, Apply f) => p a (f a) -> p s (f s)
 
-    type IndexPreservingGetter s a = forall f p g h. (Conjoined p g h, Contravariant f, Functor f) => p a (f a) -> s -> f s
+    type IndexPreservingGetter s a = forall f p g h. (Conjoined p g h, Contravariant f, Functor f) => p a (f a) -> p s (f s)
 
     type IndexPreservingLens s t a b = forall f p g h. (Conjoined p g h, Functor f) => p a (f b) -> p s (f t)
 
@@ -298,7 +338,7 @@
 
     type OpticalP p q f s a = Optical p q f s s a a
 
-    type Over p f s t a b = p s (f b) -> s -> f t
+    type Over p f s t a b = p a (f b) -> s -> f t
 
     type OverP p f s a = Over p f s s a a
 

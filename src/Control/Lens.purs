@@ -5,9 +5,16 @@ module Control.Lens
   , IxValue()
   , ix
   -- Fold
+  , (^..), (^?)
   , filtered
+  , foldlOf
+  , foldMapOf
+  , foldOf
+  , foldrOf
+  , toListOf
   -- Getter
   , (^.)
+  , to
   , use
   , view
   -- Indexed
@@ -26,6 +33,7 @@ module Control.Lens
   , under
   , withIso
   -- Lens
+  , (#~), (<#>), (??)
   , lens
   -- Prism
   , clonePrism
@@ -45,6 +53,11 @@ module Control.Lens
   , set
   , set'
   , sets
+  -- Traversal
+  , both
+  , forOf
+  , sequenceOf
+  , traverseOf
   -- Tuple
   , (~)
   , _1
@@ -120,6 +133,7 @@ module Control.Lens
   import qualified Control.Lens.Lens as Lens
   import qualified Control.Lens.Prism as Prism
   import qualified Control.Lens.Setter as Setter
+  import qualified Control.Lens.Traversal as Traversal
   import qualified Control.Lens.Tuple as Tuple
   import qualified Control.Lens.Type as Type
 
@@ -129,11 +143,21 @@ module Control.Lens
   ix = At.ix
 
   -- Fold
-  filtered = Fold.filtered
+  infixl 8 ^..
+  infixl 8 ^?
+  (^..)     = Fold.(^..)
+  (^?)      = Fold.(^?)
+  filtered  = Fold.filtered
+  foldlOf   = Fold.foldlOf
+  foldMapOf = Fold.foldMapOf
+  foldOf    = Fold.foldOf
+  foldrOf   = Fold.foldrOf
+  toListOf  = Fold.toListOf
 
   -- Getter
   infixl 8 ^.
   (^.) = Getter.(^.)
+  to   = Getter.to
   use  = Getter.use
   view = Getter.view
 
@@ -155,7 +179,13 @@ module Control.Lens
   withIso  = Iso.withIso
 
   -- Lens
-  lens = Lens.lens
+  infixl 1 #~
+  infixl 1 <#>
+  infixl 1 ??
+  (#~)  = Lens.(#~)
+  (<#>) = Lens.(<#>)
+  (??)  = Lens.(??)
+  lens  = Lens.lens
 
   -- Prism
   clonePrism = Prism.clonePrism
@@ -197,6 +227,12 @@ module Control.Lens
   set          = Setter.set
   set'         = Setter.set'
   sets         = Setter.sets
+
+  -- Traversal
+  both       = Traversal.both
+  forOf      = Traversal.forOf
+  sequenceOf = Traversal.sequenceOf
+  traverseOf = Traversal.traverseOf
 
   -- Tuple
   infixr 6 ~
