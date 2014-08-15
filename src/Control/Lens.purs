@@ -3,6 +3,7 @@ module Control.Lens
   -- At
   , Index()
   , IxValue()
+  , at
   , ix
   -- Fold
   , (^..), (^?)
@@ -138,8 +139,9 @@ module Control.Lens
   import qualified Control.Lens.Type as Type
 
   -- At
-  type Index a b = At.Index a b
+  type Index a b   = At.Index a b
   type IxValue a b = At.IxValue a b
+  at = At.at
   ix = At.ix
 
   -- Fold

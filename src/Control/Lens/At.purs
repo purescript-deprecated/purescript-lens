@@ -1,7 +1,9 @@
 module Control.Lens.At
-  ( Ixed
+  ( At
+  , Ixed
   , Index()
   , IxValue()
+  , at
   , ix
   ) where
 
@@ -9,7 +11,7 @@ module Control.Lens.At
   import Control.Lens.Type (LensP(), TraversalP())
   import Control.Monad.Identity (Identity(..))
 
-  import Data.Maybe (Maybe(..))
+  import Data.Maybe (maybe, Maybe(..))
   import Data.Traversable (sequence, traverse)
 
   import qualified Data.Map as M
@@ -28,28 +30,33 @@ module Control.Lens.At
   class Ixed m a b where
     ix :: Index m a -> TraversalP m (IxValue m b)
 
-  instance ixedArrEA :: (Eq e) => Ixed (e -> a) e a where
+  instance ixedArrEAEA :: (Eq e) => Ixed (e -> a) e a where
     ix e a2fa e2a = (\a e' -> if e == e' then a else e2a e') <$> a2fa (e2a e)
 
-  instance ixedMaybeUnit :: Ixed (Maybe a) Unit a where
+  instance ixedMaybeAUnitA :: Ixed (Maybe a) Unit a where
     ix _ _    Nothing  = pure Nothing
     ix _ a2fa (Just a) = Just <$> a2fa a
 
-  instance ixedIdentityAA :: Ixed (Identity a) Unit a where
+  -- This can't be inferred.
+  instance ixedMaybeUnitUnitA :: Ixed (Maybe Unit) Unit a where
+    ix _ _    Nothing  = pure Nothing
+    ix _ a2fa (Just a) = Just <$> pure a
+
+  instance ixedIdentityAAA :: Ixed (Identity a) Unit a where
     ix _ a2fa (Identity a) = Identity <$> a2fa a
 
-  instance ixedArrayNumberA :: Ixed [a] Number a where
+  instance ixedArrayaNumberA :: Ixed [a] Number a where
     ix n _    as | n < 0 = pure as
     ix _ _    []         = pure []
     ix 0 a2fa (a:as)     = flip (:) as <$> a2fa a
     ix n a2fa (a:as)     = (:) a <$> ix (n - 1) a2fa as
 
-  instance ixedMapKV :: (Ord k) => Ixed (M.Map k v) k v where
+  instance ixedMapKVKV :: (Ord k) => Ixed (M.Map k v) k v where
     ix k v2fv mapKV = case M.lookup k mapKV of
       Nothing  -> pure mapKV
       (Just v) -> (\v' -> M.insert k v' mapKV) <$> v2fv v
 
-  instance ixedSetK :: (Ord k) => Ixed (S.Set k) k Unit where
+  instance ixedSetKKUnit :: (Ord k) => Ixed (S.Set k) k Unit where
     ix k u2fu setK = if S.member k setK
       then (\_ -> S.insert k setK) <$> u2fu unit
       else pure setK
@@ -57,9 +64,24 @@ module Control.Lens.At
   class (Ixed m a b) <= At m a b where
     at :: Index m a -> LensP m (Maybe (IxValue m b))
 
-  -- instance atMaybe :: At (Maybe a) Unit a where
-  --   at _ a2fa Nothing = a2fa Nothing
+  instance atMaybe :: At (Maybe a) Unit a where
+    at _ a2fa = a2fa
 
+  instance atMapKVKV :: (Ord k) => At (M.Map k v) k v where
+    at k a2fa mapKV = go <$> a2fa mapKV'
+      where
+        mapKV' = M.lookup k mapKV
+        go Nothing  = maybe mapKV (const $ M.delete k mapKV) mapKV'
+        go (Just v) = M.insert k v mapKV
+
+  instance atSetKKUnit :: (Ord k) => At (S.Set k) k Unit where
+    at k a2fa setK = go <$> a2fa setK'
+      where
+        setK' = if S.member k setK then Just unit else (Nothing :: Maybe Unit)
+        go Nothing  = maybe setK (const $ S.delete k setK) setK'
+        go (Just _) = S.insert k setK
+
+  -- We can't actually do this since the b isn't inferred.
   -- sans :: forall b a m. (At m a b) => Index m a -> m -> m
   -- sans i x = x # at i .~ Nothing
 

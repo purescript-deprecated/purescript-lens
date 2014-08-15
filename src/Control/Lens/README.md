@@ -11,25 +11,36 @@
 
 ### Type Classes
 
+    class (Ixed m a b) <= At m a b where
+      at :: Index m a -> LensP m (Maybe (IxValue m b))
+
     class Ixed m a b where
       ix :: Index m a -> TraversalP m (IxValue m b)
 
 
 ### Type Class Instances
 
+    instance atMapKVKV :: (Ord k) => At (M.Map k v) k v
+
+    instance atMaybe :: At (Maybe a) Unit a
+
+    instance atSetKKUnit :: (Ord k) => At (S.Set k) k Unit
+
     instance containsMapK :: (Ord k) => Contains (S.Set k) k
 
-    instance ixedArrEA :: (Eq e) => Ixed (e -> a) e a
+    instance ixedArrEAEA :: (Eq e) => Ixed (e -> a) e a
 
-    instance ixedArrayNumberA :: Ixed [a] Number a
+    instance ixedArrayaNumberA :: Ixed [a] Number a
 
-    instance ixedIdentityAA :: Ixed (Identity a) Unit a
+    instance ixedIdentityAAA :: Ixed (Identity a) Unit a
 
-    instance ixedMapKV :: (Ord k) => Ixed (M.Map k v) k v
+    instance ixedMapKVKV :: (Ord k) => Ixed (M.Map k v) k v
 
-    instance ixedMaybeUnit :: Ixed (Maybe a) Unit a
+    instance ixedMaybeAUnitA :: Ixed (Maybe a) Unit a
 
-    instance ixedSetK :: (Ord k) => Ixed (S.Set k) k Unit
+    instance ixedMaybeUnitUnitA :: Ixed (Maybe Unit) Unit a
+
+    instance ixedSetKKUnit :: (Ord k) => Ixed (S.Set k) k Unit
 
 
 ### Values
