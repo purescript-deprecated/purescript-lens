@@ -33,7 +33,7 @@
     "purescript-maps": "~0.0.4",
     "purescript-arrows": "~0.1.0",
     "purescript-enums": "~0.1.0",
-    "purescript-bifunctors": "~0.0.3"
+    "purescript-bifunctors": "~0.0.4"
   },
   "devDependencies": {
     "purescript-easy-ffi": "~1.0.1"
