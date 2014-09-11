@@ -188,25 +188,47 @@
 
 ### Values
 
+    (%=) :: forall p b a m s. (Monad m, MonadState s m, Profunctor p) => Setting p s s a b -> p a b -> m Unit
+
     (%~) :: forall p s t a b. (Profunctor p) => Setting p s t a b -> p a b -> s -> t
+
+    (&&=) :: forall s a m. (Monad m, MonadState s m, BoolLike a) => ASetterP s a -> a -> m Unit
 
     (&&~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
 
+    (*=) :: forall s a m. (Monad m, MonadState s m, Num a) => ASetterP s a -> a -> m Unit
+
     (*~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
+
+    (++=) :: forall s a m. (Monad m, MonadState s m, Semigroup a) => ASetterP s a -> a -> m Unit
 
     (++~) :: forall s t a. (Semigroup a) => ASetter s t a a -> a -> s -> t
 
+    (+=) :: forall s a m. (Monad m, MonadState s m, Num a) => ASetterP s a -> a -> m Unit
+
     (+~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
+
+    (-=) :: forall s a m. (Monad m, MonadState s m, Num a) => ASetterP s a -> a -> m Unit
 
     (-~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
 
+    (.=) :: forall b a m s. (Monad m, MonadState s m) => ASetter s s a b -> b -> m Unit
+
     (.~) :: forall s t a b. ASetter s t a b -> b -> s -> t
 
-    (/~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
+    (//=) :: forall s a m. (Monad m, MonadState s m, Num a) => ASetterP s a -> a -> m Unit
+
+    (//~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
+
+    (<>=) :: forall s a m. (Monad m, MonadState s m, Semigroup a) => ASetterP s a -> a -> m Unit
 
     (<>~) :: forall s t a. (Semigroup a) => ASetter s t a a -> a -> s -> t
 
+    (?=) :: forall b a m s. (Monad m, MonadState s m) => ASetter s s a (Maybe b) -> b -> m Unit
+
     (?~) :: forall s t a b. ASetter s t a (Maybe b) -> b -> s -> t
+
+    (||=) :: forall s a m. (Monad m, MonadState s m, BoolLike a) => ASetterP s a -> a -> m Unit
 
     (||~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
 

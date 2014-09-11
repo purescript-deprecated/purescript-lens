@@ -46,7 +46,8 @@ module Control.Lens
   , _Just
   , _Nothing
   -- Setter
-  , (%~), (.~), (+~), (-~), (*~), (/~), (||~), (&&~), (<>~), (++~), (?~)
+  , (%~), (.~), (+~), (-~), (*~), (//~), (||~), (&&~), (<>~), (++~), (?~)
+  , (%=), (.=), (+=), (-=), (*=), (//=), (||=), (&&=), (<>=), (++=), (?=)
   , argument
   , contramapped
   , mapped
@@ -205,23 +206,45 @@ module Control.Lens
   infixr 4 +~
   infixr 4 -~
   infixr 4 *~
-  infixr 4 /~
+  infixr 4 //~
   infixr 4 ||~
   infixr 4 &&~
   infixr 4 <>~
   infixr 4 ++~
   infixr 4 ?~
+  infixr 4 %=
+  infixr 4 .=
+  infixr 4 +=
+  infixr 4 -=
+  infixr 4 *=
+  infixr 4 //=
+  infixr 4 ||=
+  infixr 4 &&=
+  infixr 4 <>=
+  infixr 4 ++=
+  infixr 4 ?=
   (%~)         = Setter.(%~)
   (.~)         = Setter.(.~)
   (+~)         = Setter.(+~)
   (-~)         = Setter.(-~)
   (*~)         = Setter.(*~)
-  (/~)         = Setter.(/~)
+  (//~)        = Setter.(//~)
   (||~)        = Setter.(||~)
   (&&~)        = Setter.(&&~)
   (<>~)        = Setter.(<>~)
   (++~)        = Setter.(++~)
   (?~)         = Setter.(?~)
+  (%=)         = Setter.(%=)
+  (.=)         = Setter.(.=)
+  (+=)         = Setter.(+=)
+  (-=)         = Setter.(-=)
+  (*=)         = Setter.(*=)
+  (//=)        = Setter.(//=)
+  (||=)        = Setter.(||=)
+  (&&=)        = Setter.(&&=)
+  (<>=)        = Setter.(<>=)
+  (++=)        = Setter.(++=)
+  (?=)         = Setter.(?=)
   argument     = Setter.argument
   contramapped = Setter.contramapped
   mapped       = Setter.mapped
