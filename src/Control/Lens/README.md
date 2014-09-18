@@ -26,7 +26,9 @@
 
     instance atSetKKUnit :: (Ord k) => At (S.Set k) k Unit
 
-    instance containsMapK :: (Ord k) => Contains (S.Set k) k
+    instance atStrMapV :: At (SM.StrMap v) String v
+
+    instance containsSetK :: (Ord k) => Contains (S.Set k) k
 
     instance ixedArrEAEA :: (Eq e) => Ixed (e -> a) e a
 
@@ -41,6 +43,8 @@
     instance ixedMaybeUnitUnitA :: Ixed (Maybe Unit) Unit a
 
     instance ixedSetKKUnit :: (Ord k) => Ixed (S.Set k) k Unit
+
+    instance ixedStrMapStringV :: Ixed (SM.StrMap v) String v
 
 
 ### Values

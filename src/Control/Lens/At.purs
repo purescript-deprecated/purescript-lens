@@ -8,6 +8,7 @@ module Control.Lens.At
   ) where
 
   import Control.Lens.Setter ((.~))
+  import Control.Lens.Lens ((<#>))
   import Control.Lens.Type (LensP(), TraversalP())
   import Control.Monad.Identity (Identity(..))
 
@@ -16,6 +17,7 @@ module Control.Lens.At
 
   import qualified Data.Map as M
   import qualified Data.Set as S
+  import qualified Data.StrMap as SM
 
   type Index a b = b
   type IxValue a b = b
@@ -23,7 +25,7 @@ module Control.Lens.At
   class Contains m a where
     contains :: Index m a -> LensP m Boolean
 
-  instance containsMapK :: (Ord k) => Contains (S.Set k) k where
+  instance containsSetK :: (Ord k) => Contains (S.Set k) k where
     contains k f s =
       (\x -> if x then S.insert k s else S.delete k s) <$> f (S.member k s)
 
@@ -54,12 +56,17 @@ module Control.Lens.At
   instance ixedMapKVKV :: (Ord k) => Ixed (M.Map k v) k v where
     ix k v2fv mapKV = case M.lookup k mapKV of
       Nothing  -> pure mapKV
-      (Just v) -> (\v' -> M.insert k v' mapKV) <$> v2fv v
+      (Just v) -> v2fv v <#> \v' -> M.insert k v' mapKV
 
   instance ixedSetKKUnit :: (Ord k) => Ixed (S.Set k) k Unit where
     ix k u2fu setK = if S.member k setK
       then (\_ -> S.insert k setK) <$> u2fu unit
       else pure setK
+
+  instance ixedStrMapStringV :: Ixed (SM.StrMap v) String v where
+    ix str v2fv strMapV = case SM.lookup str strMapV of
+      Nothing  -> pure strMapV
+      (Just v) -> v2fv v <#> \v' -> SM.insert str v' strMapV
 
   class (Ixed m a b) <= At m a b where
     at :: Index m a -> LensP m (Maybe (IxValue m b))
@@ -80,6 +87,13 @@ module Control.Lens.At
         setK' = if S.member k setK then Just unit else (Nothing :: Maybe Unit)
         go Nothing  = maybe setK (const $ S.delete k setK) setK'
         go (Just _) = S.insert k setK
+
+  instance atStrMapV :: At (SM.StrMap v) String v where
+    at str a2fa strMapV = go <$> a2fa strMapV'
+      where
+        strMapV' = SM.lookup str strMapV
+        go Nothing  = maybe strMapV (const $ SM.delete str strMapV) strMapV'
+        go (Just v) = SM.insert str v strMapV
 
   -- We can't actually do this since the b isn't inferred.
   -- sans :: forall b a m. (At m a b) => Index m a -> m -> m

@@ -30,7 +30,7 @@
     "purescript-distributive": "~0.1.0",
     "purescript-contravariant": "~0.0.1",
     "purescript-const": "~0.1.0",
-    "purescript-maps": "~0.0.4",
+    "purescript-maps": "~0.0.5",
     "purescript-arrows": "~0.1.0",
     "purescript-enums": "~0.1.0",
     "purescript-bifunctors": "~0.0.4"
