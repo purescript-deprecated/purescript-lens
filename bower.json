@@ -36,6 +36,7 @@
     "purescript-bifunctors": "~0.0.4"
   },
   "devDependencies": {
-    "purescript-easy-ffi": "~1.0.1"
+    "purescript-easy-ffi": "~1.0.1",
+    "purescript-quickcheck": "~0.1.3"
   }
 }

@@ -1,9 +1,11 @@
 module Control.Lens.At
   ( At
+  , Contains
   , Ixed
   , Index()
   , IxValue()
   , at
+  , contains
   , ix
   ) where
 
@@ -12,8 +14,10 @@ module Control.Lens.At
   import Control.Lens.Type (LensP(), TraversalP())
   import Control.Monad.Identity (Identity(..))
 
+  import Data.Array (delete, elemIndex, snoc, updateAt)
   import Data.Maybe (maybe, Maybe(..))
   import Data.Traversable (sequence, traverse)
+  import Data.Tuple (snd)
 
   import qualified Data.Map as M
   import qualified Data.Set as S

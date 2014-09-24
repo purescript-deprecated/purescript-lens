@@ -2,6 +2,11 @@ module Control.Lens.Prism
   ( APrism()
   , APrismP()
   , clonePrism
+  , is
+  , isn't
+  , matching
+  , nearly
+  , only
   , prism
   , prism'
   , withPrism
@@ -14,6 +19,7 @@ module Control.Lens.Prism
   import Control.Lens.Internal.Prism (Market(..))
   import Control.Lens.Type (Lens(), Prism(), PrismP())
   import Control.Monad.Identity (runIdentity, Identity(..))
+  import Control.MonadPlus (guard)
 
   import Data.Profunctor (dimap, lmap, Profunctor)
   import Data.Profunctor.Choice (right', Choice)
@@ -26,6 +32,21 @@ module Control.Lens.Prism
 
   clonePrism :: forall f p s t a b. (Applicative f, Choice p) => APrism  s t a b -> p a (f b) -> p s (f t)
   clonePrism stab = withPrism stab prism
+
+  is :: forall s t a b. APrism s t a b -> s -> Boolean
+  is stab s = either (const false) (const true) $ matching stab s
+
+  isn't :: forall s t a b. APrism s t a b -> s -> Boolean
+  isn't stab s = not $ is stab s
+
+  matching :: forall s t a b. APrism s t a b -> s -> Either t a
+  matching stab = withPrism stab \_ s -> s
+
+  nearly :: forall a. a -> (a -> Boolean) -> PrismP a Unit
+  nearly x p = prism' (\_ -> x) $ guard <<< p
+
+  only :: forall a. (Eq a) => a -> PrismP a Unit
+  only x = nearly x ((==) x)
 
   -- outside :: forall f p r s t a b. (Profunctor p, Representable p f) => APrism s t a b -> Lens (p t r) (p s r) (p b r) (p a r)
   -- outside stab = withPrism stab \b2t s2Eta f ft ->

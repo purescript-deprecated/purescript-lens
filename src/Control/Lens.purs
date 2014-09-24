@@ -4,7 +4,20 @@ module Control.Lens
   , Index()
   , IxValue()
   , at
+  , contains
   , ix
+  -- Cons
+  , (<|), (|>)
+  , _Cons
+  , _Snoc
+  , _cons
+  , head
+  , init
+  , last
+  , snoc
+  , tail
+  , uncons
+  , unsnoc
   -- Fold
   , (^..), (^?)
   , filtered
@@ -38,6 +51,11 @@ module Control.Lens
   , lens
   -- Prism
   , clonePrism
+  , is
+  , isn't
+  , matching
+  , nearly
+  , only
   , prism
   , prism'
   , withPrism
@@ -128,6 +146,7 @@ module Control.Lens
   )  where
 
   import qualified Control.Lens.At as At
+  import qualified Control.Lens.Cons as Cons
   import qualified Control.Lens.Fold as Fold
   import qualified Control.Lens.Getter as Getter
   import qualified Control.Lens.Indexed as Indexed
@@ -142,8 +161,25 @@ module Control.Lens
   -- At
   type Index a b   = At.Index a b
   type IxValue a b = At.IxValue a b
-  at = At.at
-  ix = At.ix
+  at       = At.at
+  contains = At.contains
+  ix       = At.ix
+
+  -- Cons
+  infixr 5 <|
+  infixl 5 |>
+  (<|)   = Cons.(<|)
+  (|>)   = Cons.(|>)
+  _Cons  = Cons._Cons
+  _Snoc  = Cons._Snoc
+  _cons  = Cons._cons
+  head   = Cons.head
+  init   = Cons.init
+  last   = Cons.last
+  snoc   = Cons.snoc
+  tail   = Cons.tail
+  uncons = Cons.uncons
+  unsnoc = Cons.unsnoc
 
   -- Fold
   infixl 8 ^..
@@ -192,6 +228,11 @@ module Control.Lens
 
   -- Prism
   clonePrism = Prism.clonePrism
+  is         = Prism.is
+  isn't      = Prism.isn't
+  matching   = Prism.matching
+  nearly     = Prism.nearly
+  only       = Prism.only
   prism      = Prism.prism
   prism'     = Prism.prism'
   withPrism  = Prism.withPrism

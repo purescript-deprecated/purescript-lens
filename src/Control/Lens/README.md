@@ -14,6 +14,9 @@
     class (Ixed m a b) <= At m a b where
       at :: Index m a -> LensP m (Maybe (IxValue m b))
 
+    class Contains m a where
+      contains :: Index m a -> LensP m Boolean
+
     class Ixed m a b where
       ix :: Index m a -> TraversalP m (IxValue m b)
 
@@ -48,6 +51,54 @@
 
 
 ### Values
+
+
+## Module Control.Lens.Cons
+
+### Type Classes
+
+    class Cons s t a b where
+      _Cons :: Prism (s a) (t b) (Tuple a (s a)) (Tuple b (t b))
+
+    class Snoc s t a b where
+      _Snoc :: Prism (s a) (t b) (Tuple (s a) a) (Tuple (t b) b)
+
+
+### Type Class Instances
+
+    instance consArray :: Cons Prim.Array Prim.Array a b
+
+    instance snocArray :: Snoc Prim.Array Prim.Array a b
+
+
+### Values
+
+    (<|) :: forall a s. (Cons s s a a) => a -> s a -> s a
+
+    (|>) :: forall a s. (Snoc s s a a) => s a -> a -> s a
+
+    _cons :: forall a s. (Cons s s a a) => a -> s a -> s a
+
+    head :: forall a s. (Cons s s a a) => TraversalP (s a) a
+
+    init :: forall a s. (Snoc s s a a) => TraversalP (s a) (s a)
+
+    last :: forall a s. (Snoc s s a a) => TraversalP (s a) a
+
+    snoc :: forall a s. (Snoc s s a a) => s a -> a -> s a
+
+    tail :: forall a s. (Cons s s a a) => TraversalP (s a) (s a)
+
+    uncons :: forall a s. (Cons s s a a) => s a -> Maybe (Tuple a (s a))
+
+    unsnoc :: forall a s. (Snoc s s a a) => s a -> Maybe (Tuple (s a) a)
+
+
+## Module Control.Lens.Equality
+
+### Values
+
+    simply :: forall p f s a r. (OpticP p f s a -> r) -> OpticP p f s a -> r
 
 
 ## Module Control.Lens.Fold
@@ -170,11 +221,58 @@
 
     clonePrism :: forall f p s t a b. (Applicative f, Choice p) => APrism s t a b -> p a (f b) -> p s (f t)
 
+    is :: forall s t a b. APrism s t a b -> s -> Boolean
+
+    isn't :: forall s t a b. APrism s t a b -> s -> Boolean
+
+    matching :: forall s t a b. APrism s t a b -> s -> Either t a
+
+    nearly :: forall a. a -> (a -> Boolean) -> PrismP a Unit
+
+    only :: forall a. (Eq a) => a -> PrismP a Unit
+
     prism :: forall f p s t a b. (Applicative f, Choice p) => (b -> t) -> (s -> Either t a) -> p a (f b) -> p s (f t)
 
     prism' :: forall s a b. (b -> s) -> (s -> Maybe a) -> Prism s s a b
 
     withPrism :: forall b r a t s. APrism s t a b -> ((b -> t) -> (s -> Either t a) -> r) -> r
+
+
+## Module Control.Lens.Review
+
+### Types
+
+    type AReview s t a b = Optic Tagged Identity s t a b
+
+    type AReviewP t b = AReview t t b b
+
+    type Review s t a b = forall p f. (B.Bifunctor p, Profunctor p, Settable f) => Optic p f s t a b
+
+    type ReviewP t b = Review t t b b
+
+    newtype Void where
+      Void :: Void -> Void
+
+
+### Values
+
+    (##) :: forall s t a b. AReview s t a b -> b -> t
+
+    absurd :: forall a. Void -> a
+
+    re :: forall s t a b. AReview s t a b -> Getter b t
+
+    reuse :: forall m b a t s. (Monad m, MonadState b m) => AReview s t a b -> m t
+
+    reuses :: forall m b r a t s. (Monad m, MonadState b m) => AReview s t a b -> (t -> r) -> m r
+
+    review :: forall m b a t s. (Monad m, MonadReader b m) => AReview s t a b -> m t
+
+    reviews :: forall m b r a t s. (Monad m, MonadReader b m) => AReview s t a b -> (t -> r) -> m r
+
+    un :: forall p f s a. (Profunctor p, B.Bifunctor p, Functor f) => Getting a s a -> OpticP p f a s
+
+    unto :: forall p f s t a b. (Profunctor p, B.Bifunctor p, Functor f) => (b -> t) -> Optic p f s t a b
 
 
 ## Module Control.Lens.Setter
