@@ -4,6 +4,10 @@
 
 ### Types
 
+    type AReview s t a b = Review.AReview s t a b
+
+    type AReviewP t b = Review.AReviewP t b
+
     type Action m s a = Type.Action m s a
 
     type As a = Type.As a
@@ -113,6 +117,10 @@
     type PrismP s a = Type.PrismP s a
 
     type RelevantMonadicFold m s a = Type.RelevantMonadicFold m s a
+
+    type Review s t a b = Review.Review s t a b
+
+    type ReviewP t b = Review.ReviewP t b
 
     type Setter s t a b = Type.Setter s t a b
 

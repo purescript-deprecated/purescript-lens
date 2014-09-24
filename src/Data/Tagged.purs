@@ -8,9 +8,11 @@ module Data.Tagged where
   import Data.Bifoldable (Bifoldable)
   import Data.Bifunctor (bimap, Bifunctor)
   import Data.Bitraversable (bitraverse, Bitraversable)
+  import Data.Either (Either(..))
   import Data.Foldable (Foldable)
   import Data.Monoid (mempty, Monoid)
   import Data.Profunctor (Profunctor)
+  import Data.Profunctor.Choice (Choice)
   import Data.Traversable (Traversable)
 
   newtype Tagged s b = Tagged b
@@ -88,3 +90,7 @@ module Data.Tagged where
 
   instance profunctorTagged :: Profunctor Tagged where
     dimap _ f (Tagged x) = Tagged $ f x
+
+  instance choiceTagged :: Choice Tagged where
+    left'  (Tagged x) = Tagged $ Left x
+    right' (Tagged x) = Tagged $ Right x

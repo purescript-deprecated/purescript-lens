@@ -98,6 +98,8 @@
 
 ### Values
 
+    simple :: forall a. EqualityP a a
+
     simply :: forall p f s a r. (OpticP p f s a -> r) -> OpticP p f s a -> r
 
 
@@ -250,15 +252,10 @@
 
     type ReviewP t b = Review t t b b
 
-    newtype Void where
-      Void :: Void -> Void
-
 
 ### Values
 
     (##) :: forall s t a b. AReview s t a b -> b -> t
-
-    absurd :: forall a. Void -> a
 
     re :: forall s t a b. AReview s t a b -> Getter b t
 

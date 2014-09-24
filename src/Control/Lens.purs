@@ -18,6 +18,9 @@ module Control.Lens
   , tail
   , uncons
   , unsnoc
+  -- Equality
+  , simple
+  , simply
   -- Fold
   , (^..), (^?)
   , filtered
@@ -63,6 +66,19 @@ module Control.Lens
   , _Right
   , _Just
   , _Nothing
+  -- Review
+  , Review()
+  , ReviewP()
+  , AReview()
+  , AReviewP()
+  , (##)
+  , re
+  , reuse
+  , reuses
+  , review
+  , reviews
+  , unto
+  , un
   -- Setter
   , (%~), (.~), (+~), (-~), (*~), (//~), (||~), (&&~), (<>~), (++~), (?~)
   , (%=), (.=), (+=), (-=), (*=), (//=), (||=), (&&=), (<>=), (++=), (?=)
@@ -143,16 +159,18 @@ module Control.Lens
   , TraversalP()
   , Traversal1()
   , Traversal1P()
-  )  where
+  ) where
 
   import qualified Control.Lens.At as At
   import qualified Control.Lens.Cons as Cons
+  import qualified Control.Lens.Equality as Equality
   import qualified Control.Lens.Fold as Fold
   import qualified Control.Lens.Getter as Getter
   import qualified Control.Lens.Indexed as Indexed
   import qualified Control.Lens.Iso as Iso
   import qualified Control.Lens.Lens as Lens
   import qualified Control.Lens.Prism as Prism
+  import qualified Control.Lens.Review as Review
   import qualified Control.Lens.Setter as Setter
   import qualified Control.Lens.Traversal as Traversal
   import qualified Control.Lens.Tuple as Tuple
@@ -180,6 +198,10 @@ module Control.Lens
   tail   = Cons.tail
   uncons = Cons.uncons
   unsnoc = Cons.unsnoc
+
+  -- Equality
+  simple = Equality.simple
+  simply = Equality.simply
 
   -- Fold
   infixl 8 ^..
@@ -240,6 +262,21 @@ module Control.Lens
   _Right     = Prism._Right
   _Just      = Prism._Just
   _Nothing   = Prism._Nothing
+
+  -- Review
+  infixr 8 ##
+  type Review s t a b  = Review.Review s t a b
+  type ReviewP t b     = Review.ReviewP t b
+  type AReview s t a b = Review.AReview s t a b
+  type AReviewP t b    = Review.AReviewP t b
+  (##)       = Review.(##)
+  re         = Review.re
+  reuse      = Review.reuse
+  reuses     = Review.reuses
+  review     = Review.review
+  reviews    = Review.reviews
+  unto       = Review.unto
+  un         = Review.un
 
   -- Setter
   infixr 4 %~

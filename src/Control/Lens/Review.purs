@@ -1,4 +1,17 @@
-module Control.Lens.Review where
+module Control.Lens.Review
+  ( Review()
+  , ReviewP()
+  , AReview()
+  , AReviewP()
+  , (##)
+  , re
+  , reuse
+  , reuses
+  , review
+  , reviews
+  , unto
+  , un
+  ) where
 
   import Control.Lens.Getter (to, view, Getting())
   import Control.Lens.Internal.Setter (Settable)
