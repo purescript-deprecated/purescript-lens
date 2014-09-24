@@ -1,6 +1,6 @@
 {
   "name": "purescript-lens",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "PureScript implementation of Lens.",
   "license": "MIT",
   "homepage": "https://github.com/joneshf/purescript-lens",
