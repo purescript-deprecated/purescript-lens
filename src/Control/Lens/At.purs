@@ -88,7 +88,7 @@ module Control.Lens.At
   instance atSetKKUnit :: (Ord k) => At (S.Set k) k Unit where
     at k a2fa setK = go <$> a2fa setK'
       where
-        setK' = if S.member k setK then Just unit else (Nothing :: Maybe Unit)
+        setK' = if S.member k setK then Just unit else Nothing
         go Nothing  = maybe setK (const $ S.delete k setK) setK'
         go (Just _) = S.insert k setK
 
