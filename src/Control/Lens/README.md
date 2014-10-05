@@ -94,6 +94,21 @@
     unsnoc :: forall a s. (Snoc s s a a) => s a -> Maybe (Tuple (s a) a)
 
 
+## Module Control.Lens.Each
+
+### Type Classes
+
+    class Each s t a b where
+      each :: Traversal s t a b
+
+
+### Type Class Instances
+
+    instance eachArray :: Each [a] [b] a b
+
+    instance eachTuple :: Each (Tuple a a) (Tuple b b) a b
+
+
 ## Module Control.Lens.Equality
 
 ### Values

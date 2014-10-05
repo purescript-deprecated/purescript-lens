@@ -23,7 +23,6 @@ var paths =
 
 var options =
     { test: { main: 'Test.Control.Lens'
-            , verboseErrors: true
             }
     };
 
