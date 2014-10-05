@@ -1,4 +1,4 @@
-module Control.Lens.Examples.Extend where
+module Examples.Control.Lens.Extend where
 
   import Control.Lens ((.~), (^.), (<#>), lens, Lens(), Setter())
 
@@ -15,7 +15,7 @@ module Control.Lens.Examples.Extend where
 
   main = do
     let bar = {bar: 3}
-    trace ((bar # fooExt.~"one")^.foo)
-    trace ((bar # fooExt.~"two").foo)
+    trace ((bar # fooExt.~"one")^.foo) -- "one"
+    trace ((bar # fooExt.~"two").foo) -- "two"
     -- This will not compile.
     -- trace $ {bar: 3}^.fooExt

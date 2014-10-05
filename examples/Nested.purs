@@ -1,4 +1,4 @@
-module Examples.Nested where
+module Examples.Control.Lens.Nested where
 
   import Control.Lens
 
@@ -28,15 +28,15 @@ module Examples.Nested where
 
   foreign import showFooImpl
     "function showFooImpl(foo) {\
-    \  return JSON.stringify(foo, null, 4);\
+    \  return JSON.stringify(foo);\
     \}" :: forall a. a -> String
 
   main = do
-    trace $ showFooImpl obj
-    trace $ showFooImpl $ baz.~10 $ obj
-    trace $ showFooImpl $ baz.~"wat" $ obj
-    trace $ showFooImpl $ foo'..bar.~10 $ obj
-    trace $ showFooImpl $ fooBar+~40 $ obj
-    trace $ showFooImpl $ obj^.fooBar
-    trace $ showFooImpl (obj#fooBar%~succ)
-    trace $ showFooImpl (over (fooBar) succ obj)
+    trace $ showFooImpl obj -- {"foo":{"bar":0},"baz":true}
+    trace $ showFooImpl $ baz.~10 $ obj -- {"foo":{"bar":0},"baz":10}
+    trace $ showFooImpl $ baz.~"wat" $ obj -- {"foo":{"bar":0},"baz":"wat"}
+    trace $ showFooImpl $ foo'..bar.~10 $ obj -- {"foo":{"bar":10},"baz":true}
+    trace $ showFooImpl $ fooBar+~40 $ obj -- {"foo":{"bar":40},"baz":true}
+    trace $ showFooImpl $ obj^.fooBar -- 0
+    trace $ showFooImpl (obj#fooBar%~succ) -- {"foo":{"bar":1},"baz":true}
+    trace $ showFooImpl (over (fooBar) succ obj) -- {"foo":{"bar":1},"baz":true}

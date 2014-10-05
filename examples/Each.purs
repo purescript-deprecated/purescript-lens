@@ -1,4 +1,4 @@
-module Example.Control.Lens.Each where
+module Examples.Control.Lens.Each where
 
   import Control.Lens
   -- Have to import typeclass because re-exporting doesn't work yet.
@@ -27,7 +27,7 @@ module Example.Control.Lens.Each where
   baz = RGBA 0 128 255 1
 
   main = do
-    print foo
-    print bar
+    print foo -- [3,4,5]
+    print bar -- Tuple (2) (10)
     -- Another case of broken inference...
-    print ((baz # each +~ 10) :: RGBA)
+    print ((baz # each +~ 10) :: RGBA) -- RGBA (10) (138) (265) (11)
