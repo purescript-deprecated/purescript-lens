@@ -18,8 +18,6 @@ module Control.Lens
   , tail
   , uncons
   , unsnoc
-  -- Each
-  , each
   -- Equality
   , simple
   , simply
@@ -165,7 +163,6 @@ module Control.Lens
 
   import qualified Control.Lens.At as At
   import qualified Control.Lens.Cons as Cons
-  import qualified Control.Lens.Each as Each
   import qualified Control.Lens.Equality as Equality
   import qualified Control.Lens.Fold as Fold
   import qualified Control.Lens.Getter as Getter
@@ -201,9 +198,6 @@ module Control.Lens
   tail   = Cons.tail
   uncons = Cons.uncons
   unsnoc = Cons.unsnoc
-
-  -- Each
-  each = Each.each
 
   -- Equality
   simple = Equality.simple
