@@ -24,17 +24,18 @@
     "tests"
   ],
   "dependencies": {
-    "purescript-transformers": "~0.2.1",
+    "purescript-transformers":  "~0.2.1",
     "purescript-foldable-traversable": "~0.1.3",
-    "purescript-tuples": "~0.2.1",
-    "purescript-profunctor": "~0.0.1",
-    "purescript-distributive": "~0.1.1",
+    "purescript-tuples":        "~0.2.1",
+    "purescript-profunctor":    "~0.0.1",
+    "purescript-distributive":  "~0.1.1",
     "purescript-contravariant": "~0.0.1",
-    "purescript-const": "~0.1.0",
-    "purescript-maps": "~0.0.5",
-    "purescript-arrows": "~0.1.1",
-    "purescript-enums": "~0.2.1",
-    "purescript-bifunctors": "~0.0.4"
+    "purescript-const":         "~0.1.0",
+    "purescript-maps":          "~0.1.1",
+    "purescript-sets":          "~0.1.0",
+    "purescript-arrows":        "~0.1.1",
+    "purescript-enums":         "~0.2.3",
+    "purescript-bifunctors":    "~0.0.4"
   },
   "devDependencies": {
     "purescript-easy-ffi": "~1.0.1",
