@@ -1,10 +1,10 @@
-module Control.Lens.Lens
+module Optic.Lens
   ( (<#>)
   , (??)
   , lens
   ) where
 
-  import Control.Lens.Type (Lens())
+  import Optic.Type (Lens())
 
   infixl 1 <#>
   infixl 1 ??

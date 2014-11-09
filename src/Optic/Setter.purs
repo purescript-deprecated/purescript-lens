@@ -1,4 +1,4 @@
-module Control.Lens.Setter
+module Optic.Setter
   ( (%~), (.~), (+~), (-~), (*~), (//~), (||~), (&&~), (<>~), (++~), (?~)
   , argument
   , contramapped
@@ -21,13 +21,13 @@ module Control.Lens.Setter
   infixr 4 ++~
   infixr 4 ?~
 
-  import Control.Lens.Internal.Setter (taintedDot, untaintedDot, Settable)
-  import Control.Lens.Type (ASetter(), ASetterP(), Optical(), Setter(), Setting())
-  import Control.Monad.Identity (runIdentity, Identity(..))
-
   import Data.Contravariant ((>$<), Contravariant)
+  import Data.Identity (runIdentity, Identity(..))
   import Data.Maybe (Maybe(..))
   import Data.Profunctor (lmap, rmap, Profunctor)
+
+  import Optic.Internal.Setter (taintedDot, untaintedDot, Settable)
+  import Optic.Type (ASetter(), ASetterP(), Optical(), Setter(), Setting())
 
   argument :: forall p r a b. (Profunctor p) => Setter (p b r) (p a r) a b
   argument = sets lmap

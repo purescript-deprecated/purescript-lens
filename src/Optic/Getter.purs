@@ -1,4 +1,4 @@
-module Control.Lens.Getter
+module Optic.Getter
   ( (^.)
   , to
   , view
@@ -6,7 +6,7 @@ module Control.Lens.Getter
 
   infixl 8 ^.
 
-  import Control.Lens.Type (Getting())
+  import Optic.Type (Getting())
 
   import Data.Contravariant ((>$<), Contravariant)
   import Data.Const (getConst, Const(..))

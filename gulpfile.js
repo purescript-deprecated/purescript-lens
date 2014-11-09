@@ -11,18 +11,15 @@ var paths =
     , bowerSrc: [ 'bower_components/purescript-*/src/**/*.purs'
                 ]
     , dest: ''
-    , docs: { 'Control.Lens': { dest: 'src/Control/README.md'
-                              , src: 'src/Control/Lens.purs'
-                              }
-            , 'Control.Lens.*': { dest: 'src/Control/Lens/README.md'
-                                , src: 'src/Control/Lens/*.purs'
-                                }
+    , docs: { 'Optic.*': { dest: 'src/Optic/README.md'
+                         , src: 'src/Optic/*.purs'
+                         }
             }
     , test: 'test/**/*.purs'
     };
 
 var options =
-    { test: { main: 'Test.Control.Lens'
+    { test: { main: 'Test.Optic'
             }
     };
 
@@ -58,10 +55,9 @@ gulp.task('browser', function() {
     return compile(purescript.psc, [paths.src], {});
 });
 
-gulp.task('docs-Control.Lens', docs('Control.Lens'));
-gulp.task('docs-Control.Lens.*', docs('Control.Lens.*'));
+gulp.task('docs-Optic.*', docs('Optic.*'));
 
-gulp.task('docs', ['docs-Control.Lens', 'docs-Control.Lens.*']);
+gulp.task('docs', ['docs-Optic.*']);
 
 gulp.task('watch-browser', function() {
     gulp.watch(paths.src, function() {runSequence('browser', 'docs')});

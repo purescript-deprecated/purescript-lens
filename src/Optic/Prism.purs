@@ -1,4 +1,4 @@
-module Control.Lens.Prism
+module Optic.Prism
   ( prism
   , prism'
   , _Left
@@ -7,7 +7,7 @@ module Control.Lens.Prism
   , _Nothing
   ) where
 
-  import Control.Lens.Type (Prism(), PrismP())
+  import Optic.Type (Prism(), PrismP())
 
   import Data.Either (either, Either(..))
   import Data.Maybe (maybe, Maybe(..))

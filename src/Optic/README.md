@@ -1,6 +1,6 @@
 # Module Documentation
 
-## Module Control.Lens.Getter
+## Module Optic.Getter
 
 ### Types
 
@@ -14,7 +14,7 @@
     view :: forall s a. Getting a s a -> s -> a
 
 
-## Module Control.Lens.Lens
+## Module Optic.Lens
 
 ### Values
 
@@ -25,7 +25,7 @@
     lens :: forall s t a b. (s -> a) -> (s -> b -> t) -> Lens s t a b
 
 
-## Module Control.Lens.Prism
+## Module Optic.Prism
 
 ### Values
 
@@ -42,7 +42,7 @@
     prism' :: forall s a b. (b -> s) -> (s -> Maybe a) -> Prism s s a b
 
 
-## Module Control.Lens.Setter
+## Module Optic.Setter
 
 ### Values
 
@@ -83,7 +83,7 @@
     sets :: forall p q f s t a b. (Profunctor p, Profunctor q, Settable f) => (p a b -> q s t) -> Optical p q f s t a b
 
 
-## Module Control.Lens.Type
+## Module Optic.Type
 
 ### Types
 

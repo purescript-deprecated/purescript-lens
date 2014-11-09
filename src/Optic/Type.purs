@@ -1,10 +1,10 @@
-module Control.Lens.Type where
+module Optic.Type where
 
-  import Control.Lens.Internal.Setter (Settable)
-  import Control.Monad.Identity (Identity())
+  import Optic.Internal.Setter (Settable)
 
   import Data.Const (Const())
   import Data.Contravariant (Contravariant)
+  import Data.Identity (Identity())
   import Data.Profunctor (Profunctor)
   import Data.Profunctor.Choice (Choice)
 

@@ -1,4 +1,4 @@
-module Control.Lens.Internal.Setter where
+module Optic.Internal.Setter where
 
   import Data.Distributive (Distributive)
   import Data.Identity (runIdentity, Identity(..))
