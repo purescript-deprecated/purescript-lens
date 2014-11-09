@@ -21,6 +21,7 @@ module Control.Lens.Iso
   import Data.Maybe (maybe, Maybe(..))
   import Data.Monoid (mempty, Monoid)
   import Data.Profunctor (dimap, rmap, Profunctor)
+  import Data.Tuple (curry, uncurry, Tuple(..))
 
   type AnIso s t a b = Exchange a b a (Identity b) -> Exchange a b s (Identity t)
   type AnIsoP s a = AnIso s s a a
@@ -64,3 +65,12 @@ module Control.Lens.Iso
   --     def = review (clonePrism p) unit
   --     go b | has (clonePrism p) b = Nothing
   --     go b                        = Just b
+
+  curried :: forall a b c d e f. Iso (Tuple a b -> c) (Tuple d e -> f) (a -> b -> c) (d -> e -> f)
+  curried = iso curry uncurry
+
+  uncurried :: forall a b c d e f. Iso (a -> b -> c) (d -> e -> f) (Tuple a b -> c) (Tuple d e -> f)
+  uncurried = iso uncurry curry
+
+  flipped :: forall a b c d e f. Iso (a -> b -> c) (d -> e -> f) (b -> a -> c) (e -> d -> f)
+  flipped = iso flip flip

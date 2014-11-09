@@ -6,6 +6,8 @@ module Control.Lens.Fold
   , foldMapOf
   , foldOf
   , foldrOf
+  , has
+  , hasn't
   , toListOf
   ) where
 
@@ -15,6 +17,8 @@ module Control.Lens.Fold
   import Data.Const (getConst, Const(..))
   import Data.Either (either, Either(..))
   import Data.Maybe (Maybe(..))
+  import Data.Monoid.All (runAll, All(..))
+  import Data.Monoid.Any (runAny, Any(..))
   import Data.Monoid.Dual (runDual, Dual(..))
   import Data.Monoid.Endo (runEndo, Endo(..))
   import Data.Monoid.First (runFirst, First(..))
@@ -41,6 +45,12 @@ module Control.Lens.Fold
   foldMapOf :: forall r a s p. (Profunctor p) => Accessing p r s a -> p a r -> s -> r
   foldMapOf prsa par = getConst `rmap` prsa (Const `rmap` par)
 
+  has :: forall a s. Getting Any s a -> s -> Boolean
+  has asa s = runAny $ foldMapOf asa (const $ Any true) s
+
+  hasn't :: forall a s. Getting All s a -> s -> Boolean
+  hasn't asa s = runAll $ foldMapOf asa (const $ All false) s
+
   toListOf :: forall a s. Getting (Endo [a]) s a -> s -> [a]
   toListOf easa = foldrOf easa (:) []
 
@@ -49,4 +59,3 @@ module Control.Lens.Fold
 
   (^?) :: forall a s. s -> Getting (First a) s a -> Maybe a
   (^?) s fasa = runFirst $ foldMapOf fasa (First `rmap` Just) s
-

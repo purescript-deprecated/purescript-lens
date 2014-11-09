@@ -121,6 +121,10 @@
 
     foldrOf :: forall r a s p. (Profunctor p) => Accessing p (Endo r) s a -> p a (r -> r) -> r -> s -> r
 
+    has :: forall a s. Getting Any s a -> s -> Boolean
+
+    hasn't :: forall a s. Getting All s a -> s -> Boolean
+
     toListOf :: forall a s. Getting (Endo [a]) s a -> s -> [a]
 
 

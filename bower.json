@@ -34,7 +34,8 @@
     "purescript-maps": "~0.0.5",
     "purescript-arrows": "~0.1.1",
     "purescript-enums": "~0.2.1",
-    "purescript-bifunctors": "~0.0.4"
+    "purescript-bifunctors": "~0.0.4",
+    "purescript-strings": "~0.3.3"
   },
   "devDependencies": {
     "purescript-easy-ffi": "~1.0.1",
