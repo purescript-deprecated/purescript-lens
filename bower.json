@@ -27,8 +27,9 @@
     "purescript-profunctor": "joneshf/purescript-profunctors#master",
     "purescript-distributive": "joneshf/purescript-distributive#~0.2.0",
     "purescript-const": "~0.1.1",
-    "purescript-bifunctors": "~0.0.6",
-    "purescript-identity": "~0.1.0"
+    "purescript-identity": "~0.1.0",
+    "purescript-either": "~0.1.4",
+    "purescript-maybe": "~0.2.1"
   },
   "devDependencies": {
     "purescript-easy-ffi": "~1.0.1",

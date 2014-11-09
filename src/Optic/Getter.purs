@@ -11,7 +11,6 @@ module Optic.Getter
   import Data.Contravariant ((>$<), Contravariant)
   import Data.Const (getConst, Const(..))
   import Data.Profunctor (dimap, rmap, Profunctor)
-  import Data.Tuple (Tuple())
 
   to :: forall a s f p. (Contravariant f, Functor f, Profunctor p) => (s -> a) -> p a (f a) -> p s (f s)
   to s2a = dimap s2a coerce
