@@ -1,10 +1,5 @@
 module Control.Lens.Setter
-  ( ASetter()
-  , ASetterP()
-  , Setting()
-  , SettingP()
-  , (%~), (.~), (+~), (-~), (*~), (//~), (||~), (&&~), (<>~), (++~), (?~)
-  , (%=), (.=), (+=), (-=), (*=), (//=), (||=), (&&=), (<>=), (++=), (?=)
+  ( (%~), (.~), (+~), (-~), (*~), (//~), (||~), (&&~), (<>~), (++~), (?~)
   , argument
   , contramapped
   , mapped
@@ -26,31 +21,13 @@ module Control.Lens.Setter
   infixr 4 ++~
   infixr 4 ?~
 
-  infixr 4 %=
-  infixr 4 .=
-  infixr 4 +=
-  infixr 4 -=
-  infixr 4 *=
-  infixr 4 //=
-  infixr 4 ||=
-  infixr 4 &&=
-  infixr 4 <>=
-  infixr 4 ++=
-  infixr 4 ?=
-
   import Control.Lens.Internal.Setter (taintedDot, untaintedDot, Settable)
-  import Control.Lens.Type (Optical(), Setter())
+  import Control.Lens.Type (ASetter(), ASetterP(), Optical(), Setter(), Setting())
   import Control.Monad.Identity (runIdentity, Identity(..))
-  import Control.Monad.State.Class (modify, MonadState)
 
   import Data.Contravariant ((>$<), Contravariant)
   import Data.Maybe (Maybe(..))
   import Data.Profunctor (lmap, rmap, Profunctor)
-
-  type ASetter s t a b = (a -> Identity b) -> s -> Identity t
-  type ASetterP s a = ASetter s s a a
-  type Setting p s t a b = p a (Identity b) -> s -> Identity t
-  type SettingP p s a = Setting p s s a a
 
   argument :: forall p r a b. (Profunctor p) => Setter (p b r) (p a r) a b
   argument = sets lmap
@@ -72,9 +49,6 @@ module Control.Lens.Setter
 
   sets :: forall p q f s t a b. (Profunctor p, Profunctor q, Settable f) => (p a b -> q s t) -> Optical p q f s t a b
   sets pab2qst = untaintedDot >>> pab2qst >>> taintedDot
-
-  assign :: forall b a m s. (Monad m, MonadState s m) => ASetter s s a b -> b -> m Unit
-  assign ssab b = modify $ set ssab b
 
   -- Line noise time.
 
@@ -110,38 +84,3 @@ module Control.Lens.Setter
 
   (?~) :: forall s t a b. ASetter s t a (Maybe b) -> b -> s -> t
   (?~) stab a = set stab (Just a)
-
-  -- Line noise with State!
-
-  (%=) :: forall p b a m s. (Monad m, MonadState s m, Profunctor p) => Setting p s s a b -> p a b -> m Unit
-  (%=) ssab b = modify $ ssab %~ b
-
-  (.=) :: forall b a m s. (Monad m, MonadState s m) => ASetter s s a b -> b -> m Unit
-  (.=) ssab b = modify $ ssab .~ b
-
-  (+=) :: forall s a m. (Monad m, MonadState s m, Num a) => ASetterP s a -> a -> m Unit
-  (+=) ssab b = modify $ ssab +~ b
-
-  (-=) :: forall s a m. (Monad m, MonadState s m, Num a) => ASetterP s a -> a -> m Unit
-  (-=) ssab b = modify $ ssab -~ b
-
-  (*=) :: forall s a m. (Monad m, MonadState s m, Num a) => ASetterP s a -> a -> m Unit
-  (*=) ssab b = modify $ ssab *~ b
-
-  (//=) :: forall s a m. (Monad m, MonadState s m, Num a) => ASetterP s a -> a -> m Unit
-  (//=) ssab b = modify $ ssab //~ b
-
-  (||=) :: forall s a m. (Monad m, MonadState s m, BoolLike a) => ASetterP s a -> a -> m Unit
-  (||=) ssab b = modify $ ssab ||~ b
-
-  (&&=) :: forall s a m. (Monad m, MonadState s m, BoolLike a) => ASetterP s a -> a -> m Unit
-  (&&=) ssab b = modify $ ssab &&~ b
-
-  (<>=) :: forall s a m. (Monad m, MonadState s m, Semigroup a) => ASetterP s a -> a -> m Unit
-  (<>=) ssab b = modify $ ssab <>~ b
-
-  (++=) :: forall s a m. (Monad m, MonadState s m, Semigroup a) => ASetterP s a -> a -> m Unit
-  (++=) ssab b = modify $ ssab ++~ b
-
-  (?=) :: forall b a m s. (Monad m, MonadState s m) => ASetter s s a (Maybe b) -> b -> m Unit
-  (?=) ssab b = modify $ ssab ?~ b
