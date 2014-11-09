@@ -1,23 +1,5 @@
 module Control.Lens
   ( (..)
-  -- At
-  , Index()
-  , IxValue()
-  , at
-  , contains
-  , ix
-  -- Cons
-  , (<|), (|>)
-  , _Cons
-  , _Snoc
-  , _cons
-  , head
-  , init
-  , last
-  , snoc
-  , tail
-  , uncons
-  , unsnoc
   -- Equality
   , simple
   , simply
@@ -161,8 +143,6 @@ module Control.Lens
   , Traversal1P()
   ) where
 
-  import qualified Control.Lens.At as At
-  import qualified Control.Lens.Cons as Cons
   import qualified Control.Lens.Equality as Equality
   import qualified Control.Lens.Fold as Fold
   import qualified Control.Lens.Getter as Getter
@@ -175,29 +155,6 @@ module Control.Lens
   import qualified Control.Lens.Traversal as Traversal
   import qualified Control.Lens.Tuple as Tuple
   import qualified Control.Lens.Type as Type
-
-  -- At
-  type Index a b   = At.Index a b
-  type IxValue a b = At.IxValue a b
-  at       = At.at
-  contains = At.contains
-  ix       = At.ix
-
-  -- Cons
-  infixr 5 <|
-  infixl 5 |>
-  (<|)   = Cons.(<|)
-  (|>)   = Cons.(|>)
-  _Cons  = Cons._Cons
-  _Snoc  = Cons._Snoc
-  _cons  = Cons._cons
-  head   = Cons.head
-  init   = Cons.init
-  last   = Cons.last
-  snoc   = Cons.snoc
-  tail   = Cons.tail
-  uncons = Cons.uncons
-  unsnoc = Cons.unsnoc
 
   -- Equality
   simple = Equality.simple

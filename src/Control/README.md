@@ -22,8 +22,6 @@
 
     type Getter s a = Type.Getter s a
 
-    type Index a b = At.Index a b
-
     type IndexPreservingAction m s a = Type.IndexPreservingAction m s a
 
     type IndexPreservingFold s a = Type.IndexPreservingFold s a
@@ -87,8 +85,6 @@
     type Iso s t a b = Type.Iso s t a b
 
     type IsoP s a = Type.IsoP s a
-
-    type IxValue a b = At.IxValue a b
 
     type Lens s t a b = Type.Lens s t a b
 
