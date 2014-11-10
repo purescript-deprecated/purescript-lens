@@ -4,7 +4,7 @@ module Optic.Lens
   , lens
   ) where
 
-  import Optic.Type (Lens())
+  import Optic.Types (Lens())
 
   infixl 1 <#>
   infixl 1 ??

@@ -6,7 +6,7 @@ module Optic.Getter
 
   infixl 8 ^.
 
-  import Optic.Type (Getting())
+  import Optic.Types (Getting())
 
   import Data.Contravariant ((>$<), Contravariant)
   import Data.Const (getConst, Const(..))

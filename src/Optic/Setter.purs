@@ -27,7 +27,7 @@ module Optic.Setter
   import Data.Profunctor (lmap, rmap, Profunctor)
 
   import Optic.Internal.Setter (taintedDot, untaintedDot, Settable)
-  import Optic.Type (ASetter(), ASetterP(), Optical(), Setter(), Setting())
+  import Optic.Types (ASetter(), ASetterP(), Optical(), Setter(), Setting())
 
   argument :: forall p r a b. (Profunctor p) => Setter (p b r) (p a r) a b
   argument = sets lmap

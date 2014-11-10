@@ -7,7 +7,7 @@ module Optic.Prism
   , _Nothing
   ) where
 
-  import Optic.Type (Prism(), PrismP())
+  import Optic.Types (Prism(), PrismP())
 
   import Data.Either (either, Either(..))
   import Data.Maybe (maybe, Maybe(..))
