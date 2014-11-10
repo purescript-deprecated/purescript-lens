@@ -1,5 +1,6 @@
 module Optic.Types where
 
+  import Optic.Internal.Prism (Market())
   import Optic.Internal.Setter (Settable)
 
   import Data.Const (Const())
@@ -9,6 +10,9 @@ module Optic.Types where
   import Data.Profunctor.Choice (Choice)
 
   type Accessing p m s a = p a (Const m a) -> s -> Const m s
+
+  type APrism s t a b = Market a b a (Identity b) -> Market a b s (Identity t)
+  type APrismP s a = APrism s s a a
 
   type ASetter s t a b = (a -> Identity b) -> s -> Identity t
   type ASetterP s a = ASetter s s a a

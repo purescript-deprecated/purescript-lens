@@ -83,9 +83,13 @@
     sets :: forall p q f s t a b. (Profunctor p, Profunctor q, Settable f) => (p a b -> q s t) -> Optical p q f s t a b
 
 
-## Module Optic.Type
+## Module Optic.Types
 
 ### Types
+
+    type APrism s t a b = Market a b a (Identity b) -> Market a b s (Identity t)
+
+    type APrismP s a = APrism s s a a
 
     type ASetter s t a b = (a -> Identity b) -> s -> Identity t
 
