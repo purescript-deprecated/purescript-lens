@@ -1,4 +1,4 @@
-module Optic.Type where
+module Optic.Types where
 
   import Optic.Internal.Setter (Settable)
 
