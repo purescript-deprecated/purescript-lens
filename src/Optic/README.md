@@ -37,9 +37,23 @@
 
     _Right :: forall a b c. Prism (Either a b) (Either a c) b c
 
+    clonePrism :: forall f p s t a b. (Applicative f, Choice p) => APrism s t a b -> p a (f b) -> p s (f t)
+
+    is :: forall s t a b. APrism s t a b -> s -> Boolean
+
+    isn't :: forall s t a b. APrism s t a b -> s -> Boolean
+
+    matching :: forall s t a b. APrism s t a b -> s -> Either t a
+
+    nearly :: forall a. a -> (a -> Boolean) -> PrismP a Unit
+
+    only :: forall a. (Eq a) => a -> PrismP a Unit
+
     prism :: forall f p s t a b. (Applicative f, Choice p) => (b -> t) -> (s -> Either t a) -> p a (f b) -> p s (f t)
 
     prism' :: forall s a b. (b -> s) -> (s -> Maybe a) -> Prism s s a b
+
+    withPrism :: forall b r a t s. APrism s t a b -> ((b -> t) -> (s -> Either t a) -> r) -> r
 
 
 ## Module Optic.Setter

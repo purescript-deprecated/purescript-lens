@@ -1,6 +1,13 @@
 module Optic.Prism
-  ( prism
+  ( clonePrism
+  , is
+  , isn't
+  , matching
+  , nearly
+  , only
+  , prism
   , prism'
+  , withPrism
   , _Left
   , _Right
   , _Just
@@ -27,6 +34,16 @@ module Optic.Prism
 
   matching :: forall s t a b. APrism s t a b -> s -> Either t a
   matching stab = withPrism stab \_ s -> s
+
+  nearly :: forall a. a -> (a -> Boolean) -> PrismP a Unit
+  nearly x p = prism' (const x) $ guard <<< p
+    where
+      guard :: Boolean -> Maybe Unit
+      guard true  = Just unit
+      guard false = Nothing
+
+  only :: forall a. (Eq a) => a -> PrismP a Unit
+  only x = nearly x ((==) x)
 
   prism :: forall f p s t a b. (Applicative f, Choice p) => (b -> t) -> (s -> Either t a) -> p a (f b) -> p s (f t)
   prism b2t s2Eta pafb = dimap s2Eta (either pure ((<$>) b2t)) (right' pafb)
