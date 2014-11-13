@@ -1,5 +1,44 @@
 # Module Documentation
 
+## Module Optic.Core
+
+### Types
+
+    type APrism s t a b = OT.APrism s t a b
+
+    type APrismP s a = OT.APrismP s a
+
+    type ASetter s t a b = OT.ASetter s t a b
+
+    type ASetterP s a = OT.ASetterP s a
+
+    type Accessing p m s a = OT.Accessing p m s a
+
+    type Getter s a = OT.Getter s a
+
+    type Getting r s a = OT.Getting r s a
+
+    type Lens s t a b = OT.Lens s t a b
+
+    type LensP s a = OT.LensP s a
+
+    type Optical p q f s t a b = OT.Optical p q f s t a b
+
+    type OpticalP p q f s a = OT.OpticalP p q f s a
+
+    type Prism s t a b = OT.Prism s t a b
+
+    type PrismP s a = OT.PrismP s a
+
+    type Setter s t a b = OT.Setter s t a b
+
+    type SetterP s a = OT.SetterP s a
+
+    type Setting p s t a b = OT.Setting p s t a b
+
+    type SettingP p s a = OT.SettingP p s a
+
+
 ## Module Optic.Getter
 
 ### Types
