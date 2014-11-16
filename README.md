@@ -1,7 +1,8 @@
 # PureScript-Lens
 
-This is an indirect port of [@ekmett][@ekmett]'s [lens][lens] library in PureScript.
-These are just [van Laarhoven][van Laarhoven] lenses.
+This started as an indirect port of [@ekmett][@ekmett]'s [lens][lens] library in PureScript.
+It has since been broken apart and simplified a bit.
+The core idea is that these are just [van Laarhoven][van Laarhoven] lenses.
 Read about them as they were called [functional references][functional references].
 [SPJ][SPJ] gave a brilliant introductory talk about them [here][SPJ-talk].
 If you're confused, I'd recommend [SPJ][SPJ]'s talk first.
@@ -25,9 +26,11 @@ to install it.
 
 ## Usage
 
-You *should* be able to import just `Control.Lens` and have most of what you need. See each directory for a summary of the available functions.
+You *should* be able to import just `Optic.Lens` and have most of what you need. See each directory for a summary of the available functions.
 
 There is no TemplateHaskell like syntax so you must define each lens individually.
+
+----------
 
 ### Warning
 Currently, [PureScript][PureScript] doesn't infer constraints [#202][#202].
@@ -35,45 +38,61 @@ If you can fix it, please help out with it.
 
 What this means for you is that you have to annotate your lens/prism/traversal/whatever with a type.
 This might sound or look hairy, but the types aren't that hard to figure out and it'll go quite a way to show you that there's no magic going on in this library.
-They're almost all just type synonyms actually.
+They're all just type synonyms actually.
 
-One way to think of the `Lens` type is to think of it as saying you want a lens from some structure to a piece of that structure.
+----------
+
+There are two main types in this library: `Lens` and `Prism`.
+Both propose a way for "getting" and "setting" values in a data type.
+`Lens` is for working with product types (`Tuple`, records, fields in a data type).
+`Prism` is for working with sum types (`Maybe`, `Either`, etc).
+Each type proposes some way to look at a specific part of a data type.
+
+With `Lens`, it proposes a way to look at one portion of a product type. 
+E.g. the first field of a tuple, or the `foo` field of a record.
+
+With `Prism`, it proposes a way to look at one side of a sum type.
+E.g. the `Left` side of an `Either`, or the `Nothing` side of a `Maybe`.
+
+For almost all of the types provided there are simple versions and more general versions. Using `Lens` as the example.
 
 `LensP s a` is the simple type when you don't need to change the type of your structure.
 
-`Lens s t a b` is the type when you need to change the type of your structure,
+`Lens s t a b` is the type when you may want to change the type of your structure.
 
 For example:
 
-```haskell
+```purescript
 data Foo = Bar String Number Boolean
 
 fooNum :: LensP Foo Number
 fooNum = lens (\(Bar _ n _) -> n) (\(Bar s _ b) n -> Bar s n b)
 ```
 
+This type and implementation states that the function `fooNum` is a `Lens` from the data type `Foo` to the `Number` field of it.
+Since it is a simple type, it does not change the type of the `Number` field or change the type of `Foo`.
+
 or
 
-```haskell
-_foo :: forall b r a t s. Lens {foo :: a | r} {foo :: b | r} a b
-_foo = lens (\o -> o.foo) (\o x -> o{foo = x})
+```purescript
+foo :: forall b r a t s. Lens {foo :: a | r} {foo :: b | r} a b
+foo = lens (\o -> o.foo) (\o x -> o{foo = x})
 ```
+
+This type and implementation states that the function `foo` is a `Lens` from any record with at least a `foo` field of type `a` to any record with at least a `foo` field of type `b`.
 
 ## Examples
 
-N.B. 
-`(~)` is an infix version of `Tuple`. 
-
-It's available in `Control.Lens.Tuple`, 
-so it should come when you import `Control.Lens`.
-It's right associative so beware of what structure it will create.
-
-`(..)` is `(<<<)` purely for aesthetic reasons.
+N.B. `(..)` is `(<<<)` purely for aesthetic reasons.
 
 `foo..bar..baz..quux` looks better and reads easier than `foo<<<bar<<<baz<<<quux`.
 
-```haskell
-➜  purescript-lens git:(master) psci src/**/*.purs bower_components/purescript-*/src/**/*.purs
+----------
+
+Using [purescript-refractor][purescript-refractor] for some pre-defined lenses/prisms, we can run this session.
+
+```purescript
+➜  purescript-lens git:(split) psci bower_components/purescript-*/src/**/*.purs
  ____                 ____            _       _   
 |  _ \ _   _ _ __ ___/ ___|  ___ _ __(_)_ __ | |_ 
 | |_) | | | | '__/ _ \___ \ / __| '__| | '_ \| __|
@@ -84,69 +103,20 @@ It's right associative so beware of what structure it will create.
 :? shows help
 
 Expressions are terminated using Ctrl+D
-> :i Control.Lens
-> ("hello" ~ "world")^._2
+> :i Optic.Core
+> :i Optic.Refractor.Lens
+> :i Data.Tuple
+> (Tuple "Hello" "World")^._2
   
-...if it's the first compile, lens imports most of the universe here...
+"World"
 
-"world"
-
-> set _2 42 ("hello" ~ "world")
+> (Tuple "Hello" "World") # _2.~42
   
-Tuple ("hello") (42)
+Tuple ("Hello") (42)
 
-> ("hello" ~ ("world" ~ "!!!"))^._2.._1
+> (Tuple "Hello" (Tuple "World" "!!!")) # _2.._1.~42
   
-"world"
-
-> set (_2.._1) 42 ("hello" ~ "world" ~ "!!!")
-  
-Tuple ("hello") (Tuple (42) ("!!!"))
-```
-
-Or, when using records.
-
-N.B. There's no show instance for records, so we just check the type instead.
-
-```haskell
-➜  purescript-lens git:(master) psci src/**/*.purs bower_components/purescript-*/src/**/*.purs
- ____                 ____            _       _   
-|  _ \ _   _ _ __ ___/ ___|  ___ _ __(_)_ __ | |_ 
-| |_) | | | | '__/ _ \___ \ / __| '__| | '_ \| __|
-|  __/| |_| | | |  __/___) | (__| |  | | |_) | |_ 
-|_|    \__,_|_|  \___|____/ \___|_|  |_| .__/ \__|
-                                       |_|        
-
-:? shows help
-
-Expressions are terminated using Ctrl+D
-> :i Control.Lens
-> let obj = {foo: {bar: {baz: true}}}
-  
-> let _foo = lens (\o -> o.foo) (\o x -> o{foo = x})
-  
-> let _bar = lens (\o -> o.bar) (\o x -> o{bar = x})
-  
-> let _baz = lens (\o -> o.baz) (\o x -> o{baz = x})
-  
-> :t _foo
-forall t13 t14 t7. Control.Lens.Type.Lens { foo :: t14 | t13 } { foo :: t7 | t13 } t14 t7
-> :t _bar
-forall t20 t26 t27. Control.Lens.Type.Lens { bar :: t27 | t26 } { bar :: t20 | t26 } t27 t20
-> :t _baz
-forall t33 t39 t40. Control.Lens.Type.Lens { baz :: t40 | t39 } { baz :: t33 | t39 } t40 t33
-> obj^._foo.._bar.._baz
-  
-true
-
-> :t obj
-{ foo :: { bar :: { baz :: Prim.Boolean } } }
-> :t _foo.._bar.._baz.~5 $ obj
-{ foo :: { bar :: { baz :: Prim.Number } } }
-> :t _foo.~"wat" $ obj
-{ foo :: Prim.String }
-> :t _foo.._bar.~[1,2,3] $ obj
-{ foo :: { bar :: [Prim.Number] } }
+Tuple ("Hello") (Tuple (42) ("!!!"))
 ```
 
 ## Contributing
@@ -167,6 +137,7 @@ don't hesitate to slap me around and explain why it's wrong.
 [functional references]: http://twanvl.nl/blog/haskell/cps-functional-references
 [lens]: https://github.com/ekmett/lens/
 [PureScript]: https://github.com/purescript/purescript/
+[purescript-refractor]: https://github.com/joneshf/purescript-refractor/
 [SPJ]: http://research.microsoft.com/en-us/people/simonpj/
 [SPJ-talk]: https://skillsmatter.com/skillscasts/4251-lenses-compositional-data-access-and-manipulation
 [van Laarhoven]: http://twanvl.nl/index
