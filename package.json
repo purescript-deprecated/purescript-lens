@@ -1,7 +1,7 @@
 {
   "name": "purescript-lens",
-  "version": "0.3.1",
-  "description": "PureScript implementation of Lens.",
+  "version": "0.3.2",
+  "description": "PureScript implementation of Lens",
   "license": "MIT",
   "homepage": "https://github.com/joneshf/purescript-lens",
   "keywords": [
@@ -9,7 +9,8 @@
     "lens"
   ],
   "authors": [
-    "Hardy Jones <jones3.hardy@gmail.com> (https://github.com/joneshf)"
+    "Hardy Jones <jones3.hardy@gmail.com> (https://github.com/joneshf)",
+    "John A. De Goes <john@degoes.net> (http://degoes.net)"
   ],
   "repository": {
     "type": "git",
