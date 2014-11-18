@@ -1,6 +1,6 @@
 module Data.Profunctor.Rep where
 
-  import Control.Monad.Identity (runIdentity, Identity(..))
+  import Data.Identity (runIdentity, Identity(..))
 
   import Data.Profunctor
 

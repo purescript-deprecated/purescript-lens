@@ -1,6 +1,5 @@
 module Control.Lens.Lens
   ( (#~)
-  , (<#>)
   , (??)
   , lens
   ) where
@@ -9,7 +8,6 @@ module Control.Lens.Lens
   import Control.Monad.State (execState, State())
 
   infixl 1 #~
-  infixl 1 <#>
   infixl 1 ??
 
   lens :: forall s t a b. (s -> a) -> (s -> b -> t) -> Lens s t a b
@@ -17,9 +15,6 @@ module Control.Lens.Lens
 
   (#~) :: forall a s. s -> State s a -> s
   (#~) s sa = execState sa s
-
-  (<#>) :: forall f a b. (Functor f) => f a -> (a -> b) -> f b
-  (<#>) x f = f <$> x
 
   (??) :: forall f a b. (Functor f) => f (a -> b) -> a -> f b
   (??) ff x = (\f -> f x) <$> ff

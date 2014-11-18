@@ -15,7 +15,7 @@ module Control.Lens.Iso
   import Control.Lens.Internal.Iso (Exchange(..))
   import Control.Lens.Prism (APrismP())
   import Control.Lens.Type (Iso(), IsoP())
-  import Control.Monad.Identity (runIdentity, Identity(..))
+  import Data.Identity (runIdentity, Identity(..))
 
   import Data.Enum (fromEnum, toEnum, Enum)
   import Data.Maybe (maybe, Maybe(..))

@@ -50,7 +50,7 @@ module Control.Lens
   , under
   , withIso
   -- Lens
-  , (#~), (<#>), (??)
+  , (#~), (??)
   , lens
   -- Prism
   , clonePrism
@@ -241,10 +241,8 @@ module Control.Lens
 
   -- Lens
   infixl 1 #~
-  infixl 1 <#>
   infixl 1 ??
   (#~)  = Lens.(#~)
-  (<#>) = Lens.(<#>)
   (??)  = Lens.(??)
   lens  = Lens.lens
 

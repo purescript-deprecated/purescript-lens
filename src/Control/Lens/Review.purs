@@ -16,7 +16,7 @@ module Control.Lens.Review
   import Control.Lens.Getter (to, view, Getting())
   import Control.Lens.Internal.Setter (Settable)
   import Control.Lens.Type (Getter(), Optic(), OpticP())
-  import Control.Monad.Identity (runIdentity, Identity(..))
+  import Data.Identity (runIdentity, Identity(..))
   import Control.Monad.Reader.Class (reader, MonadReader)
   import Control.Monad.State.Class (gets, MonadState)
 

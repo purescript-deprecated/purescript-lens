@@ -11,7 +11,7 @@ module Control.Lens.Getter
 
   import Control.Lens.Internal.Indexed (Conjoined)
   import Control.Lens.Type (IndexPreservingGetter(), Optical())
-  import Control.Monad.Identity (Identity())
+  import Data.Identity (Identity())
   import Control.Monad.Reader.Class (reader, MonadReader)
   import Control.Monad.State.Class (gets, MonadState)
 

@@ -195,8 +195,6 @@
 
     (#~) :: forall a s. s -> State s a -> s
 
-    (<#>) :: forall f a b. (Functor f) => f a -> (a -> b) -> f b
-
     (??) :: forall f a b. (Functor f) => f (a -> b) -> a -> f b
 
     lens :: forall s t a b. (s -> a) -> (s -> b -> t) -> Lens s t a b
