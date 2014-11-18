@@ -3,7 +3,7 @@ module Control.Lens.Internal.Indexed where
   import Control.Arrow.ArrowApply (ArrowApply)
   import Control.Arrow.ArrowChoice (ArrowChoice)
   import Control.Arrow.ArrowLoop (ArrowLoop)
-  import Control.Monad.Identity (runIdentity, Identity(..))
+  import Data.Identity (runIdentity, Identity(..))
   import Control.Comonad (Comonad)
 
   import Data.Distributive (Distributive)
@@ -46,14 +46,3 @@ module Control.Lens.Internal.Indexed where
   --          -> f t
   -- indexing f pafb s =
   --   snd $ runIndexing (f (\a -> Indexing (\n -> Tuple (n + 1) (indexed pafb n a))) s) 0
-
-  -- Orphan instances should be moved where they belong.
-
-  instance traversableIdentity :: Traversable Identity where
-    traverse a2mb (Identity a) = Identity <$> a2mb a
-    sequence (Identity ma) = Identity <$> ma
-
-  instance foldableIdentity :: Foldable Identity where
-    foldr f z   = runIdentity >>> flip f z
-    foldl f z   = runIdentity >>> f z
-    foldMap a2m = runIdentity >>> a2m

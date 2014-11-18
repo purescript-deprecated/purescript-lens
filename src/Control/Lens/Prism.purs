@@ -18,7 +18,7 @@ module Control.Lens.Prism
 
   import Control.Lens.Internal.Prism (Market(..))
   import Control.Lens.Type (Lens(), Prism(), PrismP())
-  import Control.Monad.Identity (runIdentity, Identity(..))
+  import Data.Identity (runIdentity, Identity(..))
   import Control.MonadPlus (guard)
 
   import Data.Profunctor (dimap, lmap, Profunctor)

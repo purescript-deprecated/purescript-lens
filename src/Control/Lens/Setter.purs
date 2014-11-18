@@ -40,7 +40,7 @@ module Control.Lens.Setter
 
   import Control.Lens.Internal.Setter (taintedDot, untaintedDot, Settable)
   import Control.Lens.Type (Optical(), Setter())
-  import Control.Monad.Identity (runIdentity, Identity(..))
+  import Data.Identity (runIdentity, Identity(..))
   import Control.Monad.State.Class (modify, MonadState)
 
   import Data.Contravariant ((>$<), Contravariant)

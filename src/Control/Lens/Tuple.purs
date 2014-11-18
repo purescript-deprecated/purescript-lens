@@ -4,7 +4,7 @@ module Control.Lens.Tuple
   , _2
   ) where
 
-  -- import Control.Monad.Identity (Identity(..))
+  -- import Data.Identity (Identity(..))
   import Control.Lens.Type (Lens())
 
   import Data.Tuple (Tuple(..))

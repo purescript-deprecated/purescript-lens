@@ -10,9 +10,8 @@ module Control.Lens.At
   ) where
 
   import Control.Lens.Setter ((.~))
-  import Control.Lens.Lens ((<#>))
   import Control.Lens.Type (LensP(), TraversalP())
-  import Control.Monad.Identity (Identity(..))
+  import Data.Identity (Identity(..))
 
   import Data.Array (delete, elemIndex, snoc, updateAt)
   import Data.Maybe (maybe, Maybe(..))
