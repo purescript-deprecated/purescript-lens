@@ -1,4 +1,4 @@
-module Control.Lens.Internal.Prism where
+module Optic.Internal.Prism where
 
   import Data.Profunctor (Profunctor)
   import Data.Profunctor.Choice (Choice)

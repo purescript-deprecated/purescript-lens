@@ -1,9 +1,13 @@
 'use strict'
 
 var gulp        = require('gulp')
+  , bump        = require('gulp-bump')
+  , filter      = require('gulp-filter')
+  , git         = require('gulp-git')
   , purescript  = require('gulp-purescript')
   , run         = require('gulp-run')
   , runSequence = require('run-sequence')
+  , tagVersion  = require('gulp-tag-version')
   ;
 
 var paths =
@@ -11,18 +15,15 @@ var paths =
     , bowerSrc: [ 'bower_components/purescript-*/src/**/*.purs'
                 ]
     , dest: ''
-    , docs: { 'Control.Lens': { dest: 'src/Control/README.md'
-                              , src: 'src/Control/Lens.purs'
-                              }
-            , 'Control.Lens.*': { dest: 'src/Control/Lens/README.md'
-                                , src: 'src/Control/Lens/*.purs'
-                                }
+    , docs: { 'Optic.*': { dest: 'src/Optic/README.md'
+                         , src: 'src/Optic/*.purs'
+                         }
             }
     , test: 'test/**/*.purs'
     };
 
 var options =
-    { test: { main: 'Test.Control.Lens'
+    { test: { main: 'Test.Optic'
             }
     };
 
@@ -39,16 +40,40 @@ var compile = function(compiler, src, opts) {
 
 function docs (target) {
     return function() {
-        var docgen = purescript.docgen();
-        docgen.on('error', function(e) {
+        var pscDocs = purescript.pscDocs();
+        pscDocs.on('error', function(e) {
             console.error(e.message);
-            docgen.end();
+            pscDocs.end();
         });
         return gulp.src(paths.docs[target].src)
-            .pipe(docgen)
+            .pipe(pscDocs)
             .pipe(gulp.dest(paths.docs[target].dest));
     }
 }
+
+gulp.task('tag', function() {
+    return gulp.src(['bower.json', 'package.json'])
+        .pipe(git.commit('Update versions.'))
+        .pipe(filter('bower.json'))
+        .pipe(tagVersion());
+});
+
+// For whatever reason, these cannot be factored out...
+gulp.task('bump-major', function() {
+    return gulp.src(['bower.json', 'package.json'])
+        .pipe(bump({type: 'major'}))
+        .pipe(gulp.dest('./'));
+});
+gulp.task('bump-minor', function() {
+    return gulp.src(['bower.json', 'package.json'])
+        .pipe(bump({type: 'minor'}))
+        .pipe(gulp.dest('./'));
+});
+gulp.task('bump-patch', function() {
+    return gulp.src(['bower.json', 'package.json'])
+        .pipe(bump({type: 'patch'}))
+        .pipe(gulp.dest('./'));
+});
 
 gulp.task('make', function() {
     return compile(purescript.pscMake, [paths.src], {});
@@ -58,10 +83,9 @@ gulp.task('browser', function() {
     return compile(purescript.psc, [paths.src], {});
 });
 
-gulp.task('docs-Control.Lens', docs('Control.Lens'));
-gulp.task('docs-Control.Lens.*', docs('Control.Lens.*'));
+gulp.task('docs-Optic.*', docs('Optic.*'));
 
-gulp.task('docs', ['docs-Control.Lens', 'docs-Control.Lens.*']);
+gulp.task('docs', ['docs-Optic.*']);
 
 gulp.task('watch-browser', function() {
     gulp.watch(paths.src, function() {runSequence('browser', 'docs')});

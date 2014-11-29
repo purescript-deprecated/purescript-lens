@@ -1,11 +1,9 @@
-module Control.Lens.Internal.Setter where
-
-  import Data.Identity (runIdentity, Identity(..))
+module Optic.Internal.Setter where
 
   import Data.Distributive (Distributive)
-  import Data.Foldable (foldl, foldr, foldMap, Foldable)
+  import Data.Identity (runIdentity, Identity(..))
   import Data.Profunctor (rmap, Profunctor)
-  import Data.Traversable (sequence, traverse, Traversable)
+  import Data.Traversable (Traversable)
 
   class (Applicative f, Distributive f, Traversable f) <= Settable f where
     untainted :: forall a. f a -> a
