@@ -57,8 +57,6 @@
 
 ### Values
 
-    (<#>) :: forall f a b. (Functor f) => f a -> (a -> b) -> f b
-
     (??) :: forall f a b. (Functor f) => f (a -> b) -> a -> f b
 
     lens :: forall s t a b. (s -> a) -> (s -> b -> t) -> Lens s t a b
@@ -67,14 +65,6 @@
 ## Module Optic.Prism
 
 ### Values
-
-    _Just :: forall a b. Prism (Maybe a) (Maybe b) a b
-
-    _Left :: forall a b c. Prism (Either a c) (Either b c) a b
-
-    _Nothing :: forall a b. PrismP (Maybe a) Unit
-
-    _Right :: forall a b c. Prism (Either a b) (Either a c) b c
 
     clonePrism :: forall f p s t a b. (Applicative f, Choice p) => APrism s t a b -> p a (f b) -> p s (f t)
 

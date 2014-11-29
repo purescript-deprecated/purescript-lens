@@ -19,10 +19,8 @@ module Optic.Core where
 
   -- Lens
 
-  infixl 1 <#>
   infixl 1 ??
 
-  (<#>) = OL.(<#>)
   (??)  = OL.(??)
   lens  = OL.lens
 
@@ -37,10 +35,6 @@ module Optic.Core where
   prism      = OP.prism
   prism'     = OP.prism'
   withPrism  = OP.withPrism
-  _Left      = OP._Left
-  _Right     = OP._Right
-  _Just      = OP._Just
-  _Nothing   = OP._Nothing
 
   -- Setter
 

@@ -8,10 +8,6 @@ module Optic.Prism
   , prism
   , prism'
   , withPrism
-  , _Left
-  , _Right
-  , _Just
-  , _Nothing
   ) where
 
   import Optic.Internal.Prism (Market(..))
@@ -54,15 +50,3 @@ module Optic.Prism
   withPrism :: forall b r a t s. APrism s t a b -> ((b -> t) -> (s -> Either t a) -> r) -> r
   withPrism stab f = case stab (Market Identity Right) of
     Market b2t s2Eta -> f (runIdentity <<< b2t) (s2Eta >>> either (runIdentity >>> Left) Right)
-
-  _Left :: forall a b c. Prism (Either a c) (Either b c) a b
-  _Left = prism Left $ either Right (Left <<< Right)
-
-  _Right :: forall a b c. Prism (Either a b) (Either a c) b c
-  _Right = prism Right $ either (Left <<< Left) Right
-
-  _Just :: forall a b. Prism (Maybe a) (Maybe b) a b
-  _Just = prism Just $ maybe (Left Nothing) Right
-
-  _Nothing :: forall a b. PrismP (Maybe a) Unit
-  _Nothing = prism' (const Nothing) $ maybe Nothing (const $ Just unit)
