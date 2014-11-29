@@ -177,7 +177,7 @@ Tuple ("Hello") (Tuple (42) ("!!!"))
 
 Please do! Issues, comments, bugs, improvements, whatever.
 
-See the guide first: [contibuting](contributing.md).
+See the guide first: [contibuting](CONTRIBUTING.md).
 
 I am not [@ekmett][@ekmett].
 I don't have the drive to build this entire library by myself.
