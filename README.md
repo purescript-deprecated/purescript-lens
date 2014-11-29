@@ -1,18 +1,13 @@
 # PureScript-Lens
 
 This started as an indirect port of [@ekmett][@ekmett]'s [lens][lens] library in PureScript.
-It has since been broken apart and simplified a bit.
+It has since been broken apart and simplified substantially.
 The core idea is that these are just [van Laarhoven][van Laarhoven] lenses.
 Read about them as they were called [functional references][functional references].
 [SPJ][SPJ] gave a brilliant introductory talk about them [here][SPJ-talk].
 If you're confused, I'd recommend [SPJ][SPJ]'s talk first.
 [@ekmett][@ekmett] has talked about them many times, [here's one][ekmett-talk].
-For more documentation, you should look at [lens][lens].
-
-__Disclaimer:__
-Not much is here at the moment, and it's got some problems. 
-It's mostly just the `Getter` and `Setter` part of [lens][lens].
-The more basic examples work. But, not expect the full expressivity of the actual [lens][lens] library.
+For more documentation, you should look at [lens][lens] and any of the lens resources online.
 
 ## Installation
 
@@ -26,9 +21,11 @@ to install it.
 
 ## Usage
 
-You *should* be able to import just `Optic.Lens` and have most of what you need. See each directory for a summary of the available functions.
+You *should* be able to import just `Optic.Lens` and have most of what you need. 
+See each directory for a summary of the available functions.
 
 There is no TemplateHaskell like syntax so you must define each lens individually.
+Or make use of [purescript-refractor][purescript-refractor], which has predefined lenses and prisms.
 
 ----------
 
@@ -80,6 +77,63 @@ foo = lens (\o -> o.foo) (\o x -> o{foo = x})
 ```
 
 This type and implementation states that the function `foo` is a `Lens` from any record with at least a `foo` field of type `a` to any record with at least a `foo` field of type `b`.
+
+So, what are the type synonyms? Some examples are:
+
+```purescript
+type Lens s t a b = forall f. (Functor f) => (a -> f b) -> s -> f t
+type LensP s a = Lens s s a a
+
+type Prism s t a b = forall f p. (Applicative f, Choice p) => p a (f b) -> p s (f t)
+type PrismP s a = Prism s s a a
+```
+
+These might seem scary, especially `Prism`, but if you squint at them properly, they look very familiar.
+
+Let's take `Lens`, for example, and instantiate `s = [a], t = [b]`. 
+
+Then we have some type: `forall f. (Functor f) => (a -> f b) -> [a] -> f [b]`.
+
+Looks pretty close to `map` (from `Data.Array`). 
+In fact, if we instantiate the `Functor` with `Identity`, 
+we get the type isomorphic to `map`: `(a -> Identity b) -> [a] -> Identity [b]`.
+
+With some simple unwrapping, we actually have the type of `map`.
+
+What about `Prism`?
+
+Let's instantiate the `Choice` to `(->)`: 
+`type Prism s t a b = forall f. (Applicative f) => (a -> f b) -> s -> f t`
+This looks pretty close to `traverse`.
+
+So, there's a bunch of similarities to the `Functor` hierarchy, and that's one of the points of this library.
+What these types synonyms allow is the ability to use similar idioms that work in the `Functor` hierarchy on containers that are not polymorphic in one variable.
+
+An example of this is if you have some type: `data Foo = Foo Number`.
+There's no way to define a `Functor` instance for `Foo`, 
+so you cannot use `(<$>), (<*>), (>>=), (=>>), pure, extract` and friends.
+But, it should be easy to see that it would be trivial to "map" over the `Number` contained within a `Foo`.
+
+If you can define a lens for `Foo`, you can do just that
+
+```purescript
+module Foo where
+
+  import Optic.Core ((*~), LensP())
+
+  data Foo = Foo Number
+
+  _Foo :: LensP Foo Number -- forall f. (Functor f) => (Number -> f Number) -> Foo -> f Foo
+  _Foo f (Foo n) = Foo <$> f n
+
+  doubleFoo :: Foo -> Foo
+  doubleFoo = _Foo *~ 2
+```
+
+Now, this is not necessarily the least verbose option for such a trivial example, 
+but it is definitely one of the more general options.
+We were able to reuse plain old functions.
+If we have some deeply nested structure, it is much less verbose for that situation.
 
 ## Examples
 
