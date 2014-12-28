@@ -59,28 +59,28 @@ module Optic.Setter
   (.~) = set
 
   (+~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
-  (+~) staa a = over staa ((+) a)
+  (+~) staa a = over staa (flip (+) a)
 
   (-~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
-  (-~) staa a = over staa ((-) a)
+  (-~) staa a = over staa (flip (-) a)
 
   (*~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
-  (*~) staa a = over staa ((*) a)
+  (*~) staa a = over staa (flip (*) a)
 
   (//~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
-  (//~) staa a = over staa ((/) a)
+  (//~) staa a = over staa (flip (/) a)
 
   (||~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
-  (||~) staa a = over staa ((||) a)
+  (||~) staa a = over staa (flip (||) a)
 
   (&&~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
-  (&&~) staa a = over staa ((&&) a)
+  (&&~) staa a = over staa (flip (&&) a)
 
   (<>~) :: forall s t a. (Semigroup a) => ASetter s t a a -> a -> s -> t
-  (<>~) staa a = over staa ((<>) a)
+  (<>~) staa a = over staa (flip (<>) a)
 
   (++~) :: forall s t a. (Semigroup a) => ASetter s t a a -> a -> s -> t
-  (++~) staa a = over staa ((++) a)
+  (++~) staa a = over staa (flip (++) a)
 
   (?~) :: forall s t a b. ASetter s t a (Maybe b) -> b -> s -> t
   (?~) stab a = set stab (Just a)
