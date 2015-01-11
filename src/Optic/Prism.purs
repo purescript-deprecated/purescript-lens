@@ -17,7 +17,7 @@ module Optic.Prism
   import Data.Identity (runIdentity, Identity(..))
   import Data.Maybe (maybe, Maybe(..))
   import Data.Profunctor (dimap)
-  import Data.Profunctor.Choice (right', Choice)
+  import Data.Profunctor.Choice (right, Choice)
 
   clonePrism :: forall f p s t a b. (Applicative f, Choice p) => APrism  s t a b -> p a (f b) -> p s (f t)
   clonePrism stab = withPrism stab prism
@@ -42,7 +42,7 @@ module Optic.Prism
   only x = nearly x ((==) x)
 
   prism :: forall f p s t a b. (Applicative f, Choice p) => (b -> t) -> (s -> Either t a) -> p a (f b) -> p s (f t)
-  prism b2t s2Eta pafb = dimap s2Eta (either pure ((<$>) b2t)) (right' pafb)
+  prism b2t s2Eta pafb = dimap s2Eta (either pure ((<$>) b2t)) (right pafb)
 
   prism' :: forall s a b. (b -> s) -> (s -> Maybe a) -> Prism s s a b
   prism' b2s s2Ma = prism b2s (\s -> maybe (Left s) Right $ s2Ma s)

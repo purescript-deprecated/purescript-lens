@@ -21,10 +21,10 @@ module Optic.Internal.Prism where
     -- I have no clue what's going on here.
     -- This is basically a straight lift from:
     -- https://github.com/ekmett/lens/blob/master/src/Control/Lens/Internal/Prism.hs#L56-L68
-    left' (Market b2t s2Eta) = Market (b2t >>> Left) \thing -> case thing of
+    left (Market b2t s2Eta) = Market (b2t >>> Left) \thing -> case thing of
       Left s -> either (Left >>> Left) Right (s2Eta s)
       Right c -> Left $ Right c
 
-    right' (Market b2t s2Eta) = Market (b2t >>> Right) \thing -> case thing of
+    right (Market b2t s2Eta) = Market (b2t >>> Right) \thing -> case thing of
       Left c -> Left $ Left c
       Right s -> either (Right >>> Left) Right (s2Eta s)
