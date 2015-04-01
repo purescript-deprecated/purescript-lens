@@ -1,6 +1,6 @@
 {
   "name": "purescript-lens",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "PureScript implementation of Lens.",
   "license": "MIT",
   "homepage": "https://github.com/joneshf/purescript-lens",
@@ -24,11 +24,11 @@
     "tests"
   ],
   "dependencies": {
-    "purescript-profunctor": "~0.1.0",
-    "purescript-distributive": "~0.4.0",
-    "purescript-const": "~0.3.0",
+    "purescript-profunctor": "~0.2.1",
+    "purescript-distributive": "~0.4.1",
+    "purescript-const": "~0.4.1",
     "purescript-identity": "~0.3.0",
-    "purescript-either": "~0.1.4",
-    "purescript-maybe": "~0.2.1"
+    "purescript-either": "~0.1.8",
+    "purescript-maybe": "~0.2.2"
   }
 }
