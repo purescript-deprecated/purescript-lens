@@ -4,7 +4,7 @@ module Optic.Types where
   import Optic.Internal.Setter (Settable)
 
   import Data.Const (Const())
-  import Data.Contravariant (Contravariant)
+  import Data.Functor.Contravariant (Contravariant)
   import Data.Identity (Identity())
   import Data.Profunctor (Profunctor)
   import Data.Profunctor.Choice (Choice)

@@ -21,7 +21,7 @@ module Optic.Setter
   infixr 4 ++~
   infixr 4 ?~
 
-  import Data.Contravariant ((>$<), Contravariant)
+  import Data.Functor.Contravariant ((>$<), Contravariant)
   import Data.Identity (runIdentity, Identity(..))
   import Data.Maybe (Maybe(..))
   import Data.Profunctor (lmap, rmap, Profunctor)
