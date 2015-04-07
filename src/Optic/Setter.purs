@@ -70,10 +70,10 @@ module Optic.Setter
   (//~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
   (//~) staa a = over staa (flip (/) a)
 
-  (||~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
+  (||~) :: forall s t a. (Lattice a) => ASetter s t a a -> a -> s -> t
   (||~) staa a = over staa (flip (||) a)
 
-  (&&~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
+  (&&~) :: forall s t a. (Lattice a) => ASetter s t a a -> a -> s -> t
   (&&~) staa a = over staa (flip (&&) a)
 
   (<>~) :: forall s t a. (Semigroup a) => ASetter s t a a -> a -> s -> t

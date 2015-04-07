@@ -323,14 +323,14 @@ sets :: forall p q f s t a b. (Profunctor p, Profunctor q, Settable f) => (p a b
 #### `(||~)`
 
 ``` purescript
-(||~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
+(||~) :: forall s t a. (Lattice a) => ASetter s t a a -> a -> s -> t
 ```
 
 
 #### `(&&~)`
 
 ``` purescript
-(&&~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
+(&&~) :: forall s t a. (Lattice a) => ASetter s t a a -> a -> s -> t
 ```
 
 
