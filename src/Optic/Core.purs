@@ -19,8 +19,12 @@ module Optic.Core where
 
   -- Lens
 
+  infixl 1 &
+  infixl 1 <&>
   infixl 1 ??
-
+  
+  (&)   = OL.(&)
+  (<&>) = OL.(<&>)
   (??)  = OL.(??)
   lens  = OL.lens
 
