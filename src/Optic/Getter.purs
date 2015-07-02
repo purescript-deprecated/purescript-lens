@@ -4,28 +4,30 @@ module Optic.Getter
   , view
   ) where
 
-  infixl 8 ^.
+infixl 8 ^.
 
-  import Optic.Types (Getting())
+import Prelude
 
-  import Data.Functor.Contravariant ((>$<), Contravariant)
-  import Data.Const (getConst, Const(..))
-  import Data.Profunctor (dimap, rmap, Profunctor)
+import Optic.Types (Getting())
 
-  to :: forall a s f p. (Contravariant f, Functor f, Profunctor p) => (s -> a) -> p a (f a) -> p s (f s)
-  to s2a = dimap s2a coerce
+import Data.Functor.Contravariant ((>$<), Contravariant)
+import Data.Const (getConst, Const(..))
+import Data.Profunctor (dimap, rmap, Profunctor)
 
-  view :: forall s a. Getting a s a -> s -> a
-  view asa s = getConst (asa Const s)
+to :: forall a s f p. (Contravariant f, Functor f, Profunctor p) => (s -> a) -> p a (f a) -> p s (f s)
+to s2a = dimap s2a coerce
 
-  (^.) :: forall s a. s -> Getting a s a -> a
-  (^.) s asa = getConst (asa Const s)
+view :: forall s a. Getting a s a -> s -> a
+view asa s = getConst (asa Const s)
 
-  newtype Void = Void Void
+(^.) :: forall s a. s -> Getting a s a -> a
+(^.) s asa = getConst (asa Const s)
 
-  coerce :: forall f a b. (Contravariant f, Functor f) => f a -> f b
-  coerce a = absurd <$> (absurd >$< a)
+newtype Void = Void Void
 
-  absurd :: forall a. Void -> a
-  absurd a = spin a
-    where spin (Void b) = spin b
+coerce :: forall f a b. (Contravariant f, Functor f) => f a -> f b
+coerce a = absurd <$> (absurd >$< a)
+
+absurd :: forall a. Void -> a
+absurd a = spin a
+  where spin (Void b) = spin b

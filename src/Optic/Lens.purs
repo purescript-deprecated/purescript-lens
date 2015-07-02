@@ -3,12 +3,14 @@ module Optic.Lens
   , lens
   ) where
 
-  import Optic.Types (Lens())
+import Prelude
 
-  infixl 1 ??
+import Optic.Types (Lens())
 
-  lens :: forall s t a b. (s -> a) -> (s -> b -> t) -> Lens s t a b
-  lens s2a s2b2t a2fb s = s2b2t s <$> a2fb (s2a s)
+infixl 1 ??
 
-  (??) :: forall f a b. (Functor f) => f (a -> b) -> a -> f b
-  (??) ff x = (\f -> f x) <$> ff
+lens :: forall s t a b. (s -> a) -> (s -> b -> t) -> Lens s t a b
+lens s2a s2b2t a2fb s = s2b2t s <$> a2fb (s2a s)
+
+(??) :: forall f a b. (Functor f) => f (a -> b) -> a -> f b
+(??) ff x = (\f -> f x) <$> ff
