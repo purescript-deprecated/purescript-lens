@@ -9,78 +9,80 @@ module Optic.Setter
   , sets
   ) where
 
-  infixr 4 %~
-  infixr 4 .~
-  infixr 4 +~
-  infixr 4 -~
-  infixr 4 *~
-  infixr 4 //~
-  infixr 4 ||~
-  infixr 4 &&~
-  infixr 4 <>~
-  infixr 4 ++~
-  infixr 4 ?~
+import Prelude
 
-  import Data.Functor.Contravariant ((>$<), Contravariant)
-  import Data.Identity (runIdentity, Identity(..))
-  import Data.Maybe (Maybe(..))
-  import Data.Profunctor (lmap, rmap, Profunctor)
+import Data.Functor.Contravariant ((>$<), Contravariant)
+import Data.Identity (runIdentity, Identity(..))
+import Data.Maybe (Maybe(..))
+import Data.Profunctor (lmap, rmap, Profunctor)
 
-  import Optic.Internal.Setter (taintedDot, untaintedDot, Settable)
-  import Optic.Types (ASetter(), ASetterP(), Optical(), Setter(), Setting())
+import Optic.Internal.Setter (taintedDot, untaintedDot, Settable)
+import Optic.Types (ASetter(), ASetterP(), Optical(), Setter(), Setting())
 
-  argument :: forall p r a b. (Profunctor p) => Setter (p b r) (p a r) a b
-  argument = sets lmap
+infixr 4 %~
+infixr 4 .~
+infixr 4 +~
+infixr 4 -~
+infixr 4 *~
+infixr 4 //~
+infixr 4 ||~
+infixr 4 &&~
+infixr 4 <>~
+infixr 4 ++~
+infixr 4 ?~
 
-  contramapped :: forall f a b. (Contravariant f) => Setter (f a) (f b) b a
-  contramapped = sets (>$<)
+argument :: forall p r a b. (Profunctor p) => Setter (p b r) (p a r) a b
+argument = sets lmap
 
-  mapped :: forall f a b. (Functor f) => Setter (f a) (f b) a b
-  mapped = sets (<$>)
+contramapped :: forall f a b. (Contravariant f) => Setter (f a) (f b) b a
+contramapped = sets (>$<)
 
-  over :: forall p s t a b. (Profunctor p) => Setting p s t a b -> p a b -> s -> t
-  over pstab pab = runIdentity <<< pstab (rmap Identity pab)
+mapped :: forall f a b. (Functor f) => Setter (f a) (f b) a b
+mapped = sets (<$>)
 
-  set :: forall s t a b. ASetter s t a b -> b -> s -> t
-  set stab b = runIdentity <<< stab (Identity <<< const b)
+over :: forall p s t a b. (Profunctor p) => Setting p s t a b -> p a b -> s -> t
+over pstab pab = runIdentity <<< pstab (rmap Identity pab)
 
-  set' :: forall s a. ASetterP s a -> a -> s -> s
-  set' sa a = runIdentity <<< sa (Identity <<< const a)
+set :: forall s t a b. ASetter s t a b -> b -> s -> t
+set stab b = runIdentity <<< stab (Identity <<< const b)
 
-  sets :: forall p q f s t a b. (Profunctor p, Profunctor q, Settable f) => (p a b -> q s t) -> Optical p q f s t a b
-  sets pab2qst = untaintedDot >>> pab2qst >>> taintedDot
+set' :: forall s a. ASetterP s a -> a -> s -> s
+set' sa a = runIdentity <<< sa (Identity <<< const a)
 
-  -- Line noise time.
+sets :: forall p q f s t a b. (Profunctor p, Profunctor q, Settable f) => (p a b -> q s t) -> Optical p q f s t a b
+sets pab2qst = untaintedDot >>> pab2qst >>> taintedDot
 
-  (%~) :: forall p s t a b. (Profunctor p) => Setting p s t a b -> p a b -> s -> t
-  (%~) = over
+-- Line noise time.
 
-  (.~) :: forall s t a b. ASetter s t a b -> b -> s -> t
-  (.~) = set
+(%~) :: forall p s t a b. (Profunctor p) => Setting p s t a b -> p a b -> s -> t
+(%~) = over
 
-  (+~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
-  (+~) staa a = over staa (flip (+) a)
+(.~) :: forall s t a b. ASetter s t a b -> b -> s -> t
+(.~) = set
 
-  (-~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
-  (-~) staa a = over staa (flip (-) a)
+(+~) :: forall s t a. (Semiring a) => ASetter s t a a -> a -> s -> t
+(+~) staa a = over staa (flip (+) a)
 
-  (*~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
-  (*~) staa a = over staa (flip (*) a)
+(-~) :: forall s t a. (Ring a) => ASetter s t a a -> a -> s -> t
+(-~) staa a = over staa (flip (-) a)
 
-  (//~) :: forall s t a. (Num a) => ASetter s t a a -> a -> s -> t
-  (//~) staa a = over staa (flip (/) a)
+(*~) :: forall s t a. (Semiring a) => ASetter s t a a -> a -> s -> t
+(*~) staa a = over staa (flip (*) a)
 
-  (||~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
-  (||~) staa a = over staa (flip (||) a)
+(//~) :: forall s t a. (DivisionRing a) => ASetter s t a a -> a -> s -> t
+(//~) staa a = over staa (flip (/) a)
 
-  (&&~) :: forall s t a. (BoolLike a) => ASetter s t a a -> a -> s -> t
-  (&&~) staa a = over staa (flip (&&) a)
+(||~) :: forall s t a. (BooleanAlgebra a) => ASetter s t a a -> a -> s -> t
+(||~) staa a = over staa (flip (||) a)
 
-  (<>~) :: forall s t a. (Semigroup a) => ASetter s t a a -> a -> s -> t
-  (<>~) staa a = over staa (flip (<>) a)
+(&&~) :: forall s t a. (BooleanAlgebra a) => ASetter s t a a -> a -> s -> t
+(&&~) staa a = over staa (flip (&&) a)
 
-  (++~) :: forall s t a. (Semigroup a) => ASetter s t a a -> a -> s -> t
-  (++~) staa a = over staa (flip (++) a)
+(<>~) :: forall s t a. (Semigroup a) => ASetter s t a a -> a -> s -> t
+(<>~) staa a = over staa (flip (<>) a)
 
-  (?~) :: forall s t a b. ASetter s t a (Maybe b) -> b -> s -> t
-  (?~) stab a = set stab (Just a)
+(++~) :: forall s t a. (Semigroup a) => ASetter s t a a -> a -> s -> t
+(++~) staa a = over staa (flip (++) a)
+
+(?~) :: forall s t a b. ASetter s t a (Maybe b) -> b -> s -> t
+(?~) stab a = set stab (Just a)

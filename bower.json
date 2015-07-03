@@ -24,11 +24,11 @@
     "tests"
   ],
   "dependencies": {
-    "purescript-profunctor": "~0.2.1",
-    "purescript-distributive": "~0.4.1",
-    "purescript-const": "~0.4.1",
-    "purescript-identity": "~0.3.0",
-    "purescript-either": "~0.1.8",
-    "purescript-maybe": "~0.2.2"
+    "purescript-profunctor": "^0.3.0",
+    "purescript-distributive": "^0.5.0",
+    "purescript-const": "^0.5.0",
+    "purescript-identity": "^0.4.0",
+    "purescript-either": "^0.2.0",
+    "purescript-maybe": "^0.3.0"
   }
 }

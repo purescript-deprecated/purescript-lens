@@ -1,4 +1,9 @@
-# PureScript-Lens
+# `purescript-lens`
+
+[![Latest release](http://img.shields.io/bower/v/purescript-lens.svg)](https://github.com/purescript-contrib/purescript-lens/releases)
+
+- [Module Documentation](docs/Optic/)
+- [Example](test/Main.purs)
 
 This started as an indirect port of [@ekmett][@ekmett]'s [lens][lens] library in PureScript.
 It has since been broken apart and simplified substantially.
