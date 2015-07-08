@@ -1,6 +1,7 @@
-# `purescript-lens`
+# purescript-lens
 
 [![Latest release](http://img.shields.io/bower/v/purescript-lens.svg)](https://github.com/purescript-contrib/purescript-lens/releases)
+[![Maintainer: joneshf](https://img.shields.io/badge/maintainer-joneshf-lightgrey.svg)](http://github.com/joneshf)
 
 - [Module Documentation](docs/Optic/)
 - [Example](test/Main.purs)
@@ -38,8 +39,9 @@ Or make use of [purescript-refractor][purescript-refractor], which has predefine
 Currently, [PureScript][PureScript] doesn't infer constraints [#202][#202].
 If you can fix it, please help out with it.
 
-What this means for you is that you have to annotate your lens/prism/traversal/whatever with a type.
-This might sound or look hairy, but the types aren't that hard to figure out and it'll go quite a way to show you that there's no magic going on in this library.
+What this means for you is that you sometimes have to annotate your lens/prism/traversal/whatever with a type.
+This might sound or look hairy, 
+but the most of the types aren't that hard to figure out and it'll go quite a way to show you that there's no magic going on in this library.
 They're all just type synonyms actually.
 
 ----------

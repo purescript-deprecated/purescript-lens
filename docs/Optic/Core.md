@@ -10,7 +10,7 @@ _right-associative / precedence 9_
 
 `..` is a synonym for `<<<` for aesthetic reasons.
 
-`foo .. bar .. baz` looks and reads better than `foo <<< bar <<< baz`, and
-mimics accessor notation for records.
+`foo .. bar .. baz` looks and reads better than `foo <<< bar <<< baz`,
+and mimics accessor notation for records.
 
 

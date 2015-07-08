@@ -12,13 +12,20 @@ var gulp        = require('gulp')
 
 var paths =
     { src: 'src/**/*.purs'
+    , bowerFFIJs: [ 'bower_components/purescript-*/src/**/*.js'
+                  ]
     , bowerSrc: [ 'bower_components/purescript-*/src/**/*.purs'
                 ]
     , dest: ''
-    , docs: { 'Optic.*': { dest: 'src/Optic/README.md'
-                         , src: 'src/Optic/*.purs'
-                         }
-            }
+    , docgen: { 'Optic.Core': 'docs/Optic/Core.md'
+              , 'Optic.Getter': 'docs/Optic/Getter.md'
+              , 'Optic.Internal.Prism': 'docs/Optic/Internal/Prism.md'
+              , 'Optic.Internal.Setter': 'docs/Optic/Internal/Setter.md'
+              , 'Optic.Lens': 'docs/Optic/Lens.md'
+              , 'Optic.Prism': 'docs/Optic/Prism.md'
+              , 'Optic.Setter': 'docs/Optic/Setter.md'
+              , 'Optic.Types': 'docs/Optic/Types.md'
+              }
     , test: 'test/**/*.purs'
     };
 
@@ -26,30 +33,6 @@ var options =
     { test: { main: 'Test.Optic'
             }
     };
-
-var compile = function(compiler, src, opts) {
-    var psc = compiler(opts);
-    psc.on('error', function(e) {
-        console.error(e.message);
-        psc.end();
-    });
-    return gulp.src(src.concat(paths.bowerSrc))
-        .pipe(psc)
-        .pipe(gulp.dest(paths.dest));
-};
-
-function docs (target) {
-    return function() {
-        var pscDocs = purescript.pscDocs();
-        pscDocs.on('error', function(e) {
-            console.error(e.message);
-            pscDocs.end();
-        });
-        return gulp.src(paths.docs[target].src)
-            .pipe(pscDocs)
-            .pipe(gulp.dest(paths.docs[target].dest));
-    }
-}
 
 gulp.task('tag', function() {
     return gulp.src(['bower.json', 'package.json'])
@@ -75,29 +58,22 @@ gulp.task('bump-patch', function() {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('make', function() {
-    return compile(purescript.pscMake, [paths.src], {});
+gulp.task('psc', function() {
+    return purescript.psc({
+        src: paths.bowerSrc.concat(paths.src),
+        ffi: paths.bowerFFIJs
+    });
 });
 
-gulp.task('browser', function() {
-    return compile(purescript.psc, [paths.src], {});
+gulp.task('docs', function() {
+    return purescript.pscDocs({
+        src: paths.bowerSrc.concat(paths.src),
+        docgen: paths.docgen
+    });
 });
 
-gulp.task('docs-Optic.*', docs('Optic.*'));
-
-gulp.task('docs', ['docs-Optic.*']);
-
-gulp.task('watch-browser', function() {
-    gulp.watch(paths.src, function() {runSequence('browser', 'docs')});
+gulp.task('watch', function() {
+    gulp.watch(paths.src, function() {runSequence('psc', 'docs')});
 });
 
-gulp.task('watch-make', function() {
-    gulp.watch(paths.src, function() {runSequence('make', 'docs')});
-});
-
-gulp.task('test', function() {
-    return compile(purescript.psc, [paths.src, paths.test], options.test)
-        .pipe(run('node').exec());
-});
-
-gulp.task('default', function() {runSequence('make', 'docs')});
+gulp.task('default', function() {runSequence('psc', 'docs')});
