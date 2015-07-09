@@ -1,5 +1,6 @@
 # purescript-lens
 
+[![Build Status](https://travis-ci.org/purescript-contrib/purescript-lens.svg?branch=master)](https://travis-ci.org/purescript-contrib/purescript-lens)
 [![Latest release](http://img.shields.io/bower/v/purescript-lens.svg)](https://github.com/purescript-contrib/purescript-lens/releases)
 [![Maintainer: joneshf](https://img.shields.io/badge/maintainer-joneshf-lightgrey.svg)](http://github.com/joneshf)
 
