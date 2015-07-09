@@ -1,11 +1,11 @@
 module Optic.Internal.Setter where
 
-  import Prelude (Applicative)
-
   import Data.Distributive (Distributive)
   import Data.Identity (runIdentity, Identity(..))
   import Data.Profunctor (rmap, Profunctor)
   import Data.Traversable (Traversable)
+
+  import Prelude (Applicative)
 
   class (Applicative f, Distributive f, Traversable f) <= Settable f where
     untainted :: forall a. f a -> a

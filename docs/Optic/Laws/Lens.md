@@ -2,6 +2,14 @@
 
 Valid `Lens`es should satisfy three laws.
 
+#### `validLens`
+
+``` purescript
+validLens :: forall s a b. (Eq a, Eq s) => LensP s a -> s -> a -> a -> a -> Boolean
+```
+
+A valid `Lens` satisfies all three of the following laws.
+
 #### `getSet`
 
 ``` purescript

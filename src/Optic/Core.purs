@@ -7,13 +7,13 @@ module Optic.Core
   , (..)
   ) where
 
-  import Prelude (Semigroupoid, (<<<))
-
   import Optic.Getter
   import Optic.Lens
   import Optic.Prism
   import Optic.Setter
   import Optic.Types
+
+  import Prelude (Semigroupoid, (<<<))
 
   infixr 9 ..
 

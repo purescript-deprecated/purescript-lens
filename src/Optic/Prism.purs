@@ -10,20 +10,20 @@ module Optic.Prism
   , withPrism
   ) where
 
-  import Prelude ( Applicative, Eq
-                 , Unit()
-                 , ($), (==), (<<<), (<$>), (>>>)
-                 , const, not, pure, unit
-                 )
-
-  import Optic.Internal.Prism (Market(..))
-  import Optic.Types (APrism(), Prism(), PrismP())
-
   import Data.Either (either, Either(..))
   import Data.Identity (runIdentity, Identity(..))
   import Data.Maybe (maybe, Maybe(..))
   import Data.Profunctor (dimap)
   import Data.Profunctor.Choice (right, Choice)
+
+  import Optic.Internal.Prism (Market(..))
+  import Optic.Types (APrism(), Prism(), PrismP())
+
+  import Prelude ( Applicative, Eq
+                 , Unit()
+                 , ($), (==), (<<<), (<$>), (>>>)
+                 , const, not, pure, unit
+                 )
 
   clonePrism :: forall f p s t a b. (Applicative f, Choice p) => APrism  s t a b -> p a (f b) -> p s (f t)
   clonePrism stab = withPrism stab prism

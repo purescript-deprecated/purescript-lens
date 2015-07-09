@@ -3,9 +3,9 @@ module Optic.Lens
   , lens
   ) where
 
-  import Prelude (Functor, (<$>))
-
   import Optic.Types (Lens())
+
+  import Prelude (Functor, (<$>))
 
   infixl 1 ??
 

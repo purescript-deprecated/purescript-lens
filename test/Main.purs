@@ -1,8 +1,10 @@
 module Test.Main where
 
-  import Prelude (Show, (#), ($), (+), (++), bind, const, show)
-  import Optic.Core
   import Control.Monad.Eff.Console (print)
+
+  import Optic.Core
+
+  import Prelude (Show, (#), ($), (+), (++), bind, const, show)
 
   newtype Foo bar baz = Foo
     { foo :: { bar :: bar }

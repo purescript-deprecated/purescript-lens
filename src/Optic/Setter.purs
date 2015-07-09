@@ -9,13 +9,6 @@ module Optic.Setter
   , sets
   ) where
 
-  import Prelude ( BooleanAlgebra, DivisionRing, Functor, Ring, Semigroup
-                 , Semiring
-                 , (+), (-), (*), (/), (||), (&&), (<>), (++), (<<<), (<$>)
-                 , (>>>)
-                 , const, flip
-                 )
-
   import Data.Functor.Contravariant ((>$<), Contravariant)
   import Data.Identity (runIdentity, Identity(..))
   import Data.Maybe (Maybe(..))
@@ -23,6 +16,13 @@ module Optic.Setter
 
   import Optic.Internal.Setter (taintedDot, untaintedDot, Settable)
   import Optic.Types (ASetter(), ASetterP(), Optical(), Setter(), Setting())
+
+  import Prelude ( BooleanAlgebra, DivisionRing, Functor, Ring, Semigroup
+                 , Semiring
+                 , (+), (-), (*), (/), (||), (&&), (<>), (++), (<<<), (<$>)
+                 , (>>>)
+                 , const, flip
+                 )
 
   infixr 4 %~
   infixr 4 .~
