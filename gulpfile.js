@@ -21,16 +21,18 @@ var paths =
               , 'Optic.Getter': 'docs/Optic/Getter.md'
               , 'Optic.Internal.Prism': 'docs/Optic/Internal/Prism.md'
               , 'Optic.Internal.Setter': 'docs/Optic/Internal/Setter.md'
+              , 'Optic.Laws.Lens': 'docs/Optic/Laws/Lens.md'
               , 'Optic.Lens': 'docs/Optic/Lens.md'
               , 'Optic.Prism': 'docs/Optic/Prism.md'
               , 'Optic.Setter': 'docs/Optic/Setter.md'
               , 'Optic.Types': 'docs/Optic/Types.md'
               }
+    , outputJs: 'output/**/*.js'
     , test: 'test/**/*.purs'
     };
 
 var options =
-    { test: { main: 'Test.Optic'
+    { test: { main: 'Test.Main'
             }
     };
 
@@ -72,8 +74,22 @@ gulp.task('docs', function() {
     });
 });
 
-gulp.task('watch', function() {
-    gulp.watch(paths.src, function() {runSequence('psc', 'docs')});
+gulp.task('test-compile', function() {
+    return purescript.psc({
+        src: paths.bowerSrc.concat(paths.src, paths.test),
+        ffi: paths.bowerFFIJs
+    });
 });
 
-gulp.task('default', function() {runSequence('psc', 'docs')});
+gulp.task('test', ['test-compile'], function() {
+    return purescript.pscBundle({
+        src: paths.outputJs,
+        main: options.test.main
+    }).pipe(run('node'));
+});
+
+gulp.task('watch', function() {
+    gulp.watch([paths.src, paths.test], function() {runSequence('psc', 'test', 'docs')});
+});
+
+gulp.task('default', function() {runSequence('psc', 'test', 'docs')});
