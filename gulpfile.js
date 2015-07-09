@@ -60,6 +60,16 @@ gulp.task('bump-patch', function() {
         .pipe(gulp.dest('./'));
 });
 
+gulp.task('bump-tag-major', function() {
+    return runSequence('bump-major', 'tag');
+});
+gulp.task('bump-tag-minor', function() {
+    return runSequence('bump-minor', 'tag');
+});
+gulp.task('bump-tag-patch', function() {
+    return runSequence('bump-patch', 'tag');
+});
+
 gulp.task('psc', function() {
     return purescript.psc({
         src: paths.bowerSrc.concat(paths.src),
@@ -89,7 +99,11 @@ gulp.task('test', ['test-compile'], function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch([paths.src, paths.test], function() {runSequence('psc', 'test', 'docs')});
+    gulp.watch([paths.src, paths.test], function() {
+      return runSequence('psc', 'test', 'docs')
+    });
 });
 
-gulp.task('default', function() {runSequence('psc', 'test', 'docs')});
+gulp.task('default', function() {
+  return runSequence('psc', 'test', 'docs')
+});
