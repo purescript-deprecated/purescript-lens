@@ -22,6 +22,9 @@ module Optic.Types where
   type Getting r s a = (a -> Const r a) -> s -> Const r s
 
   type Getter s a = forall f. (Contravariant f, Functor f) => (a -> f a) -> s -> f s
+  
+  type Iso s t a b = forall p f. (Profunctor p, Functor f) => p a (f b) -> p s (f t)
+  type IsoP s a = Iso s s a a 
 
   type Lens s t a b = forall f. (Functor f) => (a -> f b) -> s -> f t
   type LensP s a = Lens s s a a
