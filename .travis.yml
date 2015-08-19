@@ -5,6 +5,8 @@ node_js:
 install:
   - npm install -g bower gulp
   - npm install
-  - bower install
+  - bower install --production
 script:
-  - gulp
+  - gulp psc
+  - bower install
+  - gulp test
