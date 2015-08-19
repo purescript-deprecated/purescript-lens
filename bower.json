@@ -27,5 +27,8 @@
     "purescript-const": "^0.5.0",
     "purescript-distributive": "^0.5.1",
     "purescript-profunctor": "^0.3.0"
+  },
+  "devDependencies": {
+    "purescript-console": "~0.1.0"
   }
 }
