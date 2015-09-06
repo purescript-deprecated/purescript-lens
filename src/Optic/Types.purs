@@ -26,6 +26,9 @@ module Optic.Types where
   type Lens s t a b = forall f. (Functor f) => (a -> f b) -> s -> f t
   type LensP s a = Lens s s a a
 
+  type Traversal s t a b = forall f. (Applicative f) => (a -> f b) -> s -> f t
+  type TraversalP s a = Traversal s s a a
+
   type Optical p q f s t a b = p a (f b) -> q s (f t)
   type OpticalP p q f s a = Optical p q f s s a a
 
