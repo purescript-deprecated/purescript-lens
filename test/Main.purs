@@ -42,6 +42,14 @@ module Test.Main where
   succ :: Int -> Int
   succ x = x + 1
 
+  newtype I = I Int
+
+  instance showI :: Show I where
+    show (I i) = "(I " ++ show i ++ " )"
+
+  intToI :: IsoP Int I
+  intToI = iso I (\(I i) -> i)
+
   main = do
     print obj                                 -- (Foo 0 true)
     print $ _Foo..baz .~ 10 $ obj             -- (Foo 0 10)
@@ -51,3 +59,4 @@ module Test.Main where
     print $ obj ^. _Foo..fooBar               -- 0
     print $ obj # _Foo..fooBar %~ succ        -- (Foo 1 true)
     print $ over (_Foo..fooBar) succ obj      -- (Foo 1 true)
+    print $ view intToI 5                     -- (I 5)

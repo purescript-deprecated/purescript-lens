@@ -1,5 +1,6 @@
 module Optic.Core
   ( module Optic.Getter
+  , module Optic.Iso
   , module Optic.Lens
   , module Optic.Prism
   , module Optic.Setter
@@ -8,6 +9,7 @@ module Optic.Core
   ) where
 
   import Optic.Getter
+  import Optic.Iso
   import Optic.Lens
   import Optic.Prism
   import Optic.Setter
