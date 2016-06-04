@@ -23,9 +23,9 @@ module Optic.Setter
   import Data.Profunctor (lmap, rmap, class Profunctor)
 
   import Optic.Internal.Setter (taintedDot, untaintedDot, class Settable)
-  import Optic.Types (ASetter(), ASetterP(), Optical(), Setter(), Setting())
+  import Optic.Types (ASetter(), ASetter'(), Optical(), Setter(), Setting())
 
-  import Prelude ( class BooleanAlgebra, class EuclideanRing, class Functor
+  import Prelude ( class HeytingAlgebra, class EuclideanRing, class Functor
                  , class Ring, class Semigroup, class Semiring
                  , (+), (-), (*), (/), (||), (&&), (<>), (<<<), (>>>), (<$>)
                  , const, flip
@@ -57,7 +57,7 @@ module Optic.Setter
   set :: forall s t a b. ASetter s t a b -> b -> s -> t
   set stab b = runIdentity <<< stab (Identity <<< const b)
 
-  set' :: forall s a. ASetterP s a -> a -> s -> s
+  set' :: forall s a. ASetter' s a -> a -> s -> s
   set' sa a = runIdentity <<< sa (Identity <<< const a)
 
   sets :: forall p q f s t a b. (Profunctor p, Profunctor q, Settable f) => (p a b -> q s t) -> Optical p q f s t a b
@@ -75,10 +75,10 @@ module Optic.Setter
   div :: forall s t a. EuclideanRing a => ASetter s t a a -> a -> s -> t
   div staa a = over staa (flip (/) a)
 
-  or :: forall s t a. BooleanAlgebra a => ASetter s t a a -> a -> s -> t
+  or :: forall s t a. HeytingAlgebra a => ASetter s t a a -> a -> s -> t
   or staa a = over staa (flip (||) a)
 
-  and :: forall s t a. BooleanAlgebra a => ASetter s t a a -> a -> s -> t
+  and :: forall s t a. HeytingAlgebra a => ASetter s t a a -> a -> s -> t
   and staa a = over staa (flip (&&) a)
 
   concat :: forall s t a. Semigroup a => ASetter s t a a -> a -> s -> t

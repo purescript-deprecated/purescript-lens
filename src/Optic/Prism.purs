@@ -17,7 +17,7 @@ module Optic.Prism
   import Data.Profunctor.Choice (right, class Choice)
 
   import Optic.Internal.Prism (Market(..))
-  import Optic.Types (APrism(), Prism(), PrismP())
+  import Optic.Types (APrism(), Prism(), Prism'())
 
   import Prelude ( class Applicative, class Eq
                  , Unit()
@@ -37,14 +37,14 @@ module Optic.Prism
   matching :: forall s t a b. APrism s t a b -> s -> Either t a
   matching stab = withPrism stab \_ s -> s
 
-  nearly :: forall a. a -> (a -> Boolean) -> PrismP a Unit
+  nearly :: forall a. a -> (a -> Boolean) -> Prism' a Unit
   nearly x p = prism' (const x) $ guard <<< p
     where
       guard :: Boolean -> Maybe Unit
       guard true  = Just unit
       guard false = Nothing
 
-  only :: forall a. Eq a => a -> PrismP a Unit
+  only :: forall a. Eq a => a -> Prism' a Unit
   only x = nearly x ((==) x)
 
   prism :: forall f p s t a b. (Applicative f, Choice p) => (b -> t) -> (s -> Either t a) -> p a (f b) -> p s (f t)

@@ -12,7 +12,7 @@ module Optic.Core
   import Optic.Lens (flip', lens, (??))
   import Optic.Prism (clonePrism, is, isn't, matching, nearly, only, prism, prism', withPrism)
   import Optic.Setter (add, and, argument, concat, contramapped, div, mapped, mul, or, over, set, set', setJust, sets, sub, (%~), (&&~), (*~), (+~), (-~), (.~), (/~), (<>~), (?~), (||~))
-  import Optic.Types (APrism, APrismP, ASetter, ASetterP, Accessing, Getter, Getting, Lens, LensP, Optical, OpticalP, Prism, PrismP, Setter, SetterP, Setting, SettingP)
+  import Optic.Types (APrism, APrism', ASetter, ASetter', Accessing, Getter, Getting, Lens, Lens', Optical, Optical', Prism, Prism', Setter, Setter', Setting, Setting')
 
 
   import Prelude (class Semigroupoid, (<<<))

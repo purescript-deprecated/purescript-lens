@@ -18,6 +18,7 @@
   },
   "scripts": {
     "clean": "rimraf output && rimraf .pulp-cache",
+    "docs": "pulp docs",
     "build": "pulp build --censor-lib --strict",
     "test": "pulp test"
   },

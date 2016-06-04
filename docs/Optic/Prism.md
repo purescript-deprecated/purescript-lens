@@ -27,13 +27,13 @@ matching :: forall s t a b. APrism s t a b -> s -> Either t a
 #### `nearly`
 
 ``` purescript
-nearly :: forall a. a -> (a -> Boolean) -> PrismP a Unit
+nearly :: forall a. a -> (a -> Boolean) -> Prism' a Unit
 ```
 
 #### `only`
 
 ``` purescript
-only :: forall a. Eq a => a -> PrismP a Unit
+only :: forall a. Eq a => a -> Prism' a Unit
 ```
 
 #### `prism`

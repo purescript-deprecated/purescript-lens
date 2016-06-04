@@ -14,10 +14,10 @@ Profunctor (Market a b)
 Choice (Market a b)
 ```
 
-#### `MarketP`
+#### `Market'`
 
 ``` purescript
-type MarketP a = Market a a
+type Market' a = Market a a
 ```
 
 

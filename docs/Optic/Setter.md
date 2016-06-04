@@ -93,7 +93,7 @@ set :: forall s t a b. ASetter s t a b -> b -> s -> t
 #### `set'`
 
 ``` purescript
-set' :: forall s a. ASetterP s a -> a -> s -> s
+set' :: forall s a. ASetter' s a -> a -> s -> s
 ```
 
 #### `sets`
@@ -129,13 +129,13 @@ div :: forall s t a. EuclideanRing a => ASetter s t a a -> a -> s -> t
 #### `or`
 
 ``` purescript
-or :: forall s t a. BooleanAlgebra a => ASetter s t a a -> a -> s -> t
+or :: forall s t a. HeytingAlgebra a => ASetter s t a a -> a -> s -> t
 ```
 
 #### `and`
 
 ``` purescript
-and :: forall s t a. BooleanAlgebra a => ASetter s t a a -> a -> s -> t
+and :: forall s t a. HeytingAlgebra a => ASetter s t a a -> a -> s -> t
 ```
 
 #### `concat`

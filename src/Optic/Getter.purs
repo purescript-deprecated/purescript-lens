@@ -6,12 +6,12 @@ module Optic.Getter
   ) where
 
   import Data.Const (getConst, Const(..))
-  import Data.Functor.Contravariant ((>$<), class Contravariant)
-  import Data.Profunctor (dimap, class Profunctor)
+  import Data.Functor.Contravariant (class Contravariant, coerce)
+  import Data.Profunctor (class Profunctor, dimap)
 
   import Optic.Types (Getting())
 
-  import Prelude (class Functor, (<$>), flip)
+  import Prelude (class Functor, flip)
 
   infixl 8 weiv as ^.
 
@@ -23,12 +23,3 @@ module Optic.Getter
 
   weiv :: forall s a. s -> Getting a s a -> a
   weiv = flip view
-
-  newtype Void = Void Void
-
-  coerce :: forall f a b. (Contravariant f, Functor f) => f a -> f b
-  coerce a = absurd <$> (absurd >$< a)
-
-  absurd :: forall a. Void -> a
-  absurd a = spin a
-    where spin (Void b) = spin b

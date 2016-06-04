@@ -87,13 +87,13 @@ prism :: forall f p s t a b. (Applicative f, Choice p) => (b -> t) -> (s -> Eith
 #### `only`
 
 ``` purescript
-only :: forall a. Eq a => a -> PrismP a Unit
+only :: forall a. Eq a => a -> Prism' a Unit
 ```
 
 #### `nearly`
 
 ``` purescript
-nearly :: forall a. a -> (a -> Boolean) -> PrismP a Unit
+nearly :: forall a. a -> (a -> Boolean) -> Prism' a Unit
 ```
 
 #### `matching`
@@ -143,7 +143,7 @@ setJust :: forall s t a b. ASetter s t a (Maybe b) -> b -> s -> t
 #### `set'`
 
 ``` purescript
-set' :: forall s a. ASetterP s a -> a -> s -> s
+set' :: forall s a. ASetter' s a -> a -> s -> s
 ```
 
 #### `set`
@@ -161,7 +161,7 @@ over :: forall p s t a b. Profunctor p => Setting p s t a b -> p a b -> s -> t
 #### `or`
 
 ``` purescript
-or :: forall s t a. BooleanAlgebra a => ASetter s t a a -> a -> s -> t
+or :: forall s t a. HeytingAlgebra a => ASetter s t a a -> a -> s -> t
 ```
 
 #### `mul`
@@ -203,7 +203,7 @@ argument :: forall p r a b. Profunctor p => Setter (p b r) (p a r) a b
 #### `and`
 
 ``` purescript
-and :: forall s t a. BooleanAlgebra a => ASetter s t a a -> a -> s -> t
+and :: forall s t a. HeytingAlgebra a => ASetter s t a a -> a -> s -> t
 ```
 
 #### `add`
@@ -274,10 +274,10 @@ infixr 4 over as %~
 
 ### Re-exported from Optic.Types:
 
-#### `SettingP`
+#### `Setting'`
 
 ``` purescript
-type SettingP p s a = Setting p s s a a
+type Setting' p s a = Setting p s s a a
 ```
 
 #### `Setting`
@@ -286,10 +286,10 @@ type SettingP p s a = Setting p s s a a
 type Setting p s t a b = p a (Identity b) -> s -> Identity t
 ```
 
-#### `SetterP`
+#### `Setter'`
 
 ``` purescript
-type SetterP s a = Setter s s a a
+type Setter' s a = Setter s s a a
 ```
 
 #### `Setter`
@@ -298,10 +298,10 @@ type SetterP s a = Setter s s a a
 type Setter s t a b = forall f. Settable f => (a -> f b) -> s -> f t
 ```
 
-#### `PrismP`
+#### `Prism'`
 
 ``` purescript
-type PrismP s a = Prism s s a a
+type Prism' s a = Prism s s a a
 ```
 
 #### `Prism`
@@ -310,10 +310,10 @@ type PrismP s a = Prism s s a a
 type Prism s t a b = forall f p. (Applicative f, Choice p) => p a (f b) -> p s (f t)
 ```
 
-#### `OpticalP`
+#### `Optical'`
 
 ``` purescript
-type OpticalP p q f s a = Optical p q f s s a a
+type Optical' p q f s a = Optical p q f s s a a
 ```
 
 #### `Optical`
@@ -322,10 +322,10 @@ type OpticalP p q f s a = Optical p q f s s a a
 type Optical p q f s t a b = p a (f b) -> q s (f t)
 ```
 
-#### `LensP`
+#### `Lens'`
 
 ``` purescript
-type LensP s a = Lens s s a a
+type Lens' s a = Lens s s a a
 ```
 
 #### `Lens`
@@ -352,10 +352,10 @@ type Getter s a = forall f. (Contravariant f, Functor f) => (a -> f a) -> s -> f
 type Accessing p m s a = p a (Const m a) -> s -> Const m s
 ```
 
-#### `ASetterP`
+#### `ASetter'`
 
 ``` purescript
-type ASetterP s a = ASetter s s a a
+type ASetter' s a = ASetter s s a a
 ```
 
 #### `ASetter`
@@ -364,10 +364,10 @@ type ASetterP s a = ASetter s s a a
 type ASetter s t a b = (a -> Identity b) -> s -> Identity t
 ```
 
-#### `APrismP`
+#### `APrism'`
 
 ``` purescript
-type APrismP s a = APrism s s a a
+type APrism' s a = APrism s s a a
 ```
 
 #### `APrism`

@@ -7,7 +7,7 @@ module Optic.Internal.Prism where
   import Prelude (class Functor, ($), (>>>))
 
   data Market a b s t = Market (b -> t) (s -> Either t a)
-  type MarketP a = Market a a
+  type Market' a = Market a a
 
   instance functorMarket :: Functor (Market a b s) where
     map t2u (Market b2t s2Eta) =

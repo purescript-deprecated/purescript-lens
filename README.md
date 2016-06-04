@@ -50,7 +50,7 @@ E.g. the `Left` side of an `Either`, or the `Nothing` side of a `Maybe`.
 
 For almost all of the types provided there are simple versions and more general versions. Using `Lens` as the example.
 
-`LensP s a` is the simple type when you don't need to change the type of your structure.
+`Lens' s a` is the simple type when you don't need to change the type of your structure.
 
 `Lens s t a b` is the type when you may want to change the type of your structure.
 
@@ -59,7 +59,7 @@ For example:
 ```purescript
 data Foo = Bar String Number Boolean
 
-fooNum :: LensP Foo Number
+fooNum :: Lens' Foo Number
 fooNum = lens (\(Bar _ n _) -> n) (\(Bar s _ b) n -> Bar s n b)
 ```
 
@@ -79,10 +79,10 @@ So, what are the type synonyms? Some examples are:
 
 ```purescript
 type Lens s t a b = forall f. (Functor f) => (a -> f b) -> s -> f t
-type LensP s a = Lens s s a a
+type Lens' s a = Lens s s a a
 
 type Prism s t a b = forall f p. (Applicative f, Choice p) => p a (f b) -> p s (f t)
-type PrismP s a = Prism s s a a
+type Prism' s a = Prism s s a a
 ```
 
 These might seem scary, especially `Prism`, but if you squint at them properly, they look very familiar.
@@ -116,11 +116,11 @@ If you can define a lens for `Foo`, you can do just that
 ```purescript
 module Foo where
 
-  import Optic.Core ((*~), LensP())
+  import Optic.Core ((*~), Lens'())
 
   data Foo = Foo Number
 
-  _Foo :: LensP Foo Number -- forall f. (Functor f) => (Number -> f Number) -> Foo -> f Foo
+  _Foo :: Lens' Foo Number -- forall f. (Functor f) => (Number -> f Number) -> Foo -> f Foo
   _Foo f (Foo n) = Foo <$> f n
 
   doubleFoo :: Foo -> Foo

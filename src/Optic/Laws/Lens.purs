@@ -3,24 +3,22 @@ module Optic.Laws.Lens where
 
   import Optic.Getter (view)
   import Optic.Setter (set)
-  import Optic.Types (Lens(), LensP())
+  import Optic.Types (Lens(), Lens'())
 
   import Prelude (class Eq, (&&), (==))
 
   -- | A valid `Lens` satisfies all three of the following laws.
-  validLens :: forall s a. (Eq a, Eq s) => LensP s a -> s -> a -> a -> a -> Boolean
-  validLens l s x y z = getSet l s
-                     && setGet l s x
-                     && setSet l s y z
+  validLens :: forall s a. (Eq a, Eq s) => Lens' s a -> s -> a -> a -> a -> Boolean
+  validLens l s x y z = getSet l s && setGet l s x && setSet l s y z
 
   -- | If you get a value out, and then set it immediately back,
   -- | nothing should change.
-  getSet :: forall s a. Eq s => LensP s a -> s -> Boolean
+  getSet :: forall s a. Eq s => Lens' s a -> s -> Boolean
   getSet l s = set l (view l s) s == s
 
   -- | If you set a value, and them get it immediately out,
   -- | you should get the value you set.
-  setGet :: forall s a. Eq a => LensP s a -> s -> a -> Boolean
+  setGet :: forall s a. Eq a => Lens' s a -> s -> a -> Boolean
   setGet l s x = view l (set l x s) == x
 
   -- | If you set two values, the last set is the one that matters.
