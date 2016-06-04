@@ -45,7 +45,7 @@ type Getter s a = forall f. (Contravariant f, Functor f) => (a -> f a) -> s -> f
 #### `Lens`
 
 ``` purescript
-type Lens s t a b = forall f. (Functor f) => (a -> f b) -> s -> f t
+type Lens s t a b = forall f. Functor f => (a -> f b) -> s -> f t
 ```
 
 #### `LensP`
@@ -81,7 +81,7 @@ type PrismP s a = Prism s s a a
 #### `Setter`
 
 ``` purescript
-type Setter s t a b = forall f. (Settable f) => (a -> f b) -> s -> f t
+type Setter s t a b = forall f. Settable f => (a -> f b) -> s -> f t
 ```
 
 #### `SetterP`

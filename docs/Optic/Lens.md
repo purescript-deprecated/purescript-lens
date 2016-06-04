@@ -1,17 +1,21 @@
 ## Module Optic.Lens
 
+#### `(??)`
+
+``` purescript
+infixl 1 flip' as ??
+```
+
 #### `lens`
 
 ``` purescript
 lens :: forall s t a b. (s -> a) -> (s -> b -> t) -> Lens s t a b
 ```
 
-#### `(??)`
+#### `flip'`
 
 ``` purescript
-(??) :: forall f a b. (Functor f) => f (a -> b) -> a -> f b
+flip' :: forall f a b. Functor f => f (a -> b) -> a -> f b
 ```
-
-_left-associative / precedence 1_
 
 

@@ -16,15 +16,14 @@
     "type": "git",
     "url": "git://github.com/joneshf/purescript-lens.git"
   },
+  "scripts": {
+    "clean": "rimraf output && rimraf .pulp-cache",
+    "build": "pulp build --censor-lib --strict",
+    "test": "pulp test"
+  },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-bump": "^0.3.1",
-    "gulp-filter": "^2.0.2",
-    "gulp-git": "^1.2.4",
-    "gulp-purescript": "^0.5.0",
-    "gulp-run": "~1.6.4",
-    "gulp-tag-version": "^1.2.1",
-    "purescript": "^0.7.3-fixed",
-    "run-sequence": "^1.1.1"
+    "pulp": "^9.0.0",
+    "purescript-psa": "^0.3.8",
+    "rimraf": "^2.5.0"
   }
 }

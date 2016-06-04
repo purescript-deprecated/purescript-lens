@@ -24,11 +24,12 @@
     "tests"
   ],
   "dependencies": {
-    "purescript-const": "^0.5.0",
-    "purescript-distributive": "^0.5.1",
-    "purescript-profunctor": "^0.3.0"
+    "purescript-const": "^1.0.0",
+    "purescript-distributive": "^1.0.0",
+    "purescript-profunctor": "^1.0.0"
   },
   "devDependencies": {
-    "purescript-console": "~0.1.0"
+    "purescript-psci-support": "^1.0.0",
+    "purescript-console": "^1.0.0"
   }
 }

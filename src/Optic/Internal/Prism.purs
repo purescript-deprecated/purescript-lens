@@ -1,10 +1,10 @@
 module Optic.Internal.Prism where
 
-  import Data.Profunctor (Profunctor)
-  import Data.Profunctor.Choice (Choice)
+  import Data.Profunctor (class Profunctor)
+  import Data.Profunctor.Choice (class Choice)
   import Data.Either (either, Either(..))
 
-  import Prelude (Functor, ($), (>>>))
+  import Prelude (class Functor, ($), (>>>))
 
   data Market a b s t = Market (b -> t) (s -> Either t a)
   type MarketP a = Market a a

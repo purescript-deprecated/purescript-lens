@@ -14,12 +14,12 @@ module Optic.Prism
   import Data.Identity (runIdentity, Identity(..))
   import Data.Maybe (maybe, Maybe(..))
   import Data.Profunctor (dimap)
-  import Data.Profunctor.Choice (right, Choice)
+  import Data.Profunctor.Choice (right, class Choice)
 
   import Optic.Internal.Prism (Market(..))
   import Optic.Types (APrism(), Prism(), PrismP())
 
-  import Prelude ( Applicative, Eq
+  import Prelude ( class Applicative, class Eq
                  , Unit()
                  , ($), (==), (<<<), (<$>), (>>>)
                  , const, not, pure, unit
@@ -44,7 +44,7 @@ module Optic.Prism
       guard true  = Just unit
       guard false = Nothing
 
-  only :: forall a. (Eq a) => a -> PrismP a Unit
+  only :: forall a. Eq a => a -> PrismP a Unit
   only x = nearly x ((==) x)
 
   prism :: forall f p s t a b. (Applicative f, Choice p) => (b -> t) -> (s -> Either t a) -> p a (f b) -> p s (f t)

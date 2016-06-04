@@ -5,21 +5,23 @@ module Optic.Core
   , module Optic.Setter
   , module Optic.Types
   , (..)
+  , o
   ) where
 
-  import Optic.Getter
-  import Optic.Lens
-  import Optic.Prism
-  import Optic.Setter
-  import Optic.Types
+  import Optic.Getter (to, view, weiv, (^.))
+  import Optic.Lens (flip', lens, (??))
+  import Optic.Prism (clonePrism, is, isn't, matching, nearly, only, prism, prism', withPrism)
+  import Optic.Setter (add, and, argument, concat, contramapped, div, mapped, mul, or, over, set, set', setJust, sets, sub, (%~), (&&~), (*~), (+~), (-~), (.~), (/~), (<>~), (?~), (||~))
+  import Optic.Types (APrism, APrismP, ASetter, ASetterP, Accessing, Getter, Getting, Lens, LensP, Optical, OpticalP, Prism, PrismP, Setter, SetterP, Setting, SettingP)
 
-  import Prelude (Semigroupoid, (<<<))
 
-  infixr 9 ..
+  import Prelude (class Semigroupoid, (<<<))
 
   -- | `..` is a synonym for `<<<` for aesthetic reasons.
   -- |
   -- | `foo .. bar .. baz` looks and reads better than `foo <<< bar <<< baz`,
   -- | and mimics accessor notation for records.
-  (..) :: forall a b c d. (Semigroupoid a) => a c d -> a b c -> a b d
-  (..) = (<<<)
+  infixr 9 o as ..
+
+  o :: forall a b c d. Semigroupoid a => a c d -> a b c -> a b d
+  o = (<<<)

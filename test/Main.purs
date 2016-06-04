@@ -1,10 +1,11 @@
 module Test.Main where
 
-  import Control.Monad.Eff.Console (print)
+  import Control.Monad.Eff (Eff)
+  import Control.Monad.Eff.Console (CONSOLE, logShow)
 
   import Optic.Core
 
-  import Prelude (Show, (#), ($), (+), (++), bind, const, show)
+  import Prelude (class Show, Unit, (#), ($), (+), (<>), bind, const, show)
 
   newtype Foo bar baz = Foo
     { foo :: { bar :: bar }
@@ -12,7 +13,7 @@ module Test.Main where
     }
 
   instance showFoo :: (Show bar, Show baz) => Show (Foo bar baz) where
-    show (Foo x) = "(Foo " ++ show x.foo.bar ++ " " ++ show x.baz ++ ")"
+    show (Foo x) = "(Foo " <> show x.foo.bar <> " " <> show x.baz <> ")"
 
   _Foo :: forall bar1 baz1 bar2 baz2.
             Lens (Foo bar1 baz1)
@@ -42,12 +43,13 @@ module Test.Main where
   succ :: Int -> Int
   succ x = x + 1
 
+  main :: forall r. Eff (console :: CONSOLE | r) Unit
   main = do
-    print obj                                 -- (Foo 0 true)
-    print $ _Foo..baz .~ 10 $ obj             -- (Foo 0 10)
-    print $ _Foo..baz .~ "wat" $ obj          -- (Foo 0 "wat")
-    print $ _Foo..foo'..bar .~ 10 $ obj       -- (Foo 10 true)
-    print $ _Foo..fooBar +~ 40 $ obj          -- (Foo 40 true)
-    print $ obj ^. _Foo..fooBar               -- 0
-    print $ obj # _Foo..fooBar %~ succ        -- (Foo 1 true)
-    print $ over (_Foo..fooBar) succ obj      -- (Foo 1 true)
+    logShow obj                                 -- (Foo 0 true)
+    logShow $ _Foo..baz .~ 10 $ obj             -- (Foo 0 10)
+    logShow $ _Foo..baz .~ "wat" $ obj          -- (Foo 0 "wat")
+    logShow $ _Foo..foo'..bar .~ 10 $ obj       -- (Foo 10 true)
+    logShow $ _Foo..fooBar +~ 40 $ obj          -- (Foo 40 true)
+    logShow $ obj ^. _Foo..fooBar               -- 0
+    logShow $ obj # _Foo..fooBar %~ succ        -- (Foo 1 true)
+    logShow $ over (_Foo..fooBar) succ obj      -- (Foo 1 true)

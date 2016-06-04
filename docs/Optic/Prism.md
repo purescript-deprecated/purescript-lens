@@ -33,7 +33,7 @@ nearly :: forall a. a -> (a -> Boolean) -> PrismP a Unit
 #### `only`
 
 ``` purescript
-only :: forall a. (Eq a) => a -> PrismP a Unit
+only :: forall a. Eq a => a -> PrismP a Unit
 ```
 
 #### `prism`

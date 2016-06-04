@@ -9,9 +9,9 @@ data Market a b s t
 
 ##### Instances
 ``` purescript
-instance functorMarket :: Functor (Market a b s)
-instance profunctorMarket :: Profunctor (Market a b)
-instance choiceMarket :: Choice (Market a b)
+Functor (Market a b s)
+Profunctor (Market a b)
+Choice (Market a b)
 ```
 
 #### `MarketP`

@@ -1,15 +1,14 @@
 module Optic.Types where
 
   import Data.Const (Const())
-  import Data.Functor.Contravariant (Contravariant)
+  import Data.Functor.Contravariant (class Contravariant)
   import Data.Identity (Identity())
-  import Data.Profunctor (Profunctor)
-  import Data.Profunctor.Choice (Choice)
+  import Data.Profunctor.Choice (class Choice)
 
   import Optic.Internal.Prism (Market())
-  import Optic.Internal.Setter (Settable)
+  import Optic.Internal.Setter (class Settable)
 
-  import Prelude (Applicative, Functor)
+  import Prelude (class Applicative, class Functor)
 
   type Accessing p m s a = p a (Const m a) -> s -> Const m s
 
