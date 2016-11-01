@@ -1,7 +1,8 @@
 module Optic.Internal.Setter where
 
   import Data.Distributive (class Distributive)
-  import Data.Identity (runIdentity, Identity(..))
+  import Data.Identity (Identity(..))
+  import Data.Newtype (unwrap)
   import Data.Profunctor (rmap, class Profunctor)
   import Data.Traversable (class Traversable)
 
@@ -14,5 +15,5 @@ module Optic.Internal.Setter where
 
   instance settableIdentity :: Settable Identity where
     untainted (Identity x) = x
-    untaintedDot = rmap runIdentity
+    untaintedDot = rmap unwrap
     taintedDot = rmap Identity
