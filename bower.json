@@ -1,6 +1,5 @@
 {
   "name": "purescript-lens",
-  "version": "1.0.1",
   "description": "PureScript implementation of Lens.",
   "license": "MIT",
   "homepage": "https://github.com/joneshf/purescript-lens",
@@ -29,6 +28,7 @@
     "purescript-profunctor": "^2.0.0"
   },
   "devDependencies": {
+    "purescript-psci-support": "^2.0.0",
     "purescript-console": "^2.0.0"
   }
 }

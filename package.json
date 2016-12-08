@@ -1,6 +1,6 @@
 {
+  "private": true,
   "name": "purescript-lens",
-  "version": "1.0.1",
   "description": "PureScript implementation of Lens",
   "license": "MIT",
   "homepage": "https://github.com/joneshf/purescript-lens",
@@ -19,12 +19,13 @@
   "scripts": {
     "clean": "rimraf output && rimraf .pulp-cache",
     "docs": "pulp docs",
-    "build": "pulp build --censor-lib --strict",
+    "build": "pulp build -- --censor-lib --strict",
     "test": "pulp test"
   },
   "devDependencies": {
-    "pulp": "^9.0.0",
-    "purescript-psa": "^0.3.8",
-    "rimraf": "^2.5.0"
+    "pulp": "^10.0.0",
+    "purescript": "^0.10.2",
+    "purescript-psa": "^0.4.0",
+    "rimraf": "^2.5.4"
   }
 }
