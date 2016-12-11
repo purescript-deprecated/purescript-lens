@@ -7,9 +7,9 @@ module Optic.Getter
 
   import Data.Const (Const(..))
   import Data.Functor.Contravariant (class Contravariant, coerce)
-  import Data.Profunctor (class Profunctor, dimap)
   import Data.Newtype (unwrap)
-
+  import Data.Profunctor (class Profunctor, dimap)
+  
   import Optic.Types (Getting())
 
   import Prelude (class Functor, flip)
