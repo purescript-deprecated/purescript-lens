@@ -5,9 +5,10 @@ module Optic.Getter
   , weiv
   ) where
 
-  import Data.Const (getConst, Const(..))
+  import Data.Const (Const(..))
   import Data.Functor.Contravariant (class Contravariant, coerce)
   import Data.Profunctor (class Profunctor, dimap)
+  import Data.Newtype (unwrap)
 
   import Optic.Types (Getting())
 
@@ -19,7 +20,7 @@ module Optic.Getter
   to s2a = dimap s2a coerce
 
   view :: forall s a. Getting a s a -> s -> a
-  view asa s = getConst (asa Const s)
+  view asa s = unwrap (asa Const s)
 
   weiv :: forall s a. s -> Getting a s a -> a
   weiv = flip view

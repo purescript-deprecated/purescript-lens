@@ -11,8 +11,9 @@ module Optic.Prism
   ) where
 
   import Data.Either (either, Either(..))
-  import Data.Identity (runIdentity, Identity(..))
+  import Data.Identity (Identity(..))
   import Data.Maybe (maybe, Maybe(..))
+  import Data.Newtype (unwrap)
   import Data.Profunctor (dimap)
   import Data.Profunctor.Choice (right, class Choice)
 
@@ -55,4 +56,4 @@ module Optic.Prism
 
   withPrism :: forall b r a t s. APrism s t a b -> ((b -> t) -> (s -> Either t a) -> r) -> r
   withPrism stab f = case stab (Market Identity Right) of
-    Market b2t s2Eta -> f (runIdentity <<< b2t) (s2Eta >>> either (runIdentity >>> Left) Right)
+    Market b2t s2Eta -> f (unwrap <<< b2t) (s2Eta >>> either (unwrap >>> Left) Right)

@@ -18,8 +18,9 @@ module Optic.Setter
   ) where
 
   import Data.Functor.Contravariant ((>$<), class Contravariant)
-  import Data.Identity (runIdentity, Identity(..))
+  import Data.Identity (Identity(..))
   import Data.Maybe (Maybe(..))
+  import Data.Newtype (unwrap)
   import Data.Profunctor (lmap, rmap, class Profunctor)
 
   import Optic.Internal.Setter (taintedDot, untaintedDot, class Settable)
@@ -52,13 +53,13 @@ module Optic.Setter
   mapped = sets (<$>)
 
   over :: forall p s t a b. Profunctor p => Setting p s t a b -> p a b -> s -> t
-  over pstab pab = runIdentity <<< pstab (rmap Identity pab)
+  over pstab pab = unwrap <<< pstab (rmap Identity pab)
 
   set :: forall s t a b. ASetter s t a b -> b -> s -> t
-  set stab b = runIdentity <<< stab (Identity <<< const b)
+  set stab b = unwrap <<< stab (Identity <<< const b)
 
   set' :: forall s a. ASetter' s a -> a -> s -> s
-  set' sa a = runIdentity <<< sa (Identity <<< const a)
+  set' sa a = unwrap <<< sa (Identity <<< const a)
 
   sets :: forall p q f s t a b. (Profunctor p, Profunctor q, Settable f) => (p a b -> q s t) -> Optical p q f s t a b
   sets pab2qst = untaintedDot >>> pab2qst >>> taintedDot
