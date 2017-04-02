@@ -5,7 +5,7 @@ module Test.Main where
 
   import Optic.Core
 
-  import Prelude (class Show, Unit, (#), ($), (+), (<>), bind, const, show)
+  import Prelude (class Show, Unit, (#), ($), (+), (<>), const, show, discard)
 
   newtype Foo bar baz = Foo
     { foo :: { bar :: bar }

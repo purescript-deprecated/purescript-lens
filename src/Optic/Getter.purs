@@ -16,7 +16,7 @@ module Optic.Getter
 
   infixl 8 weiv as ^.
 
-  to :: forall a s f p. (Contravariant f, Functor f, Profunctor p) => (s -> a) -> p a (f a) -> p s (f s)
+  to :: forall a s f p. Contravariant f => Functor f => Profunctor p => (s -> a) -> p a (f a) -> p s (f s)
   to s2a = dimap s2a coerce
 
   view :: forall s a. Getting a s a -> s -> a

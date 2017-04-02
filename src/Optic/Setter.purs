@@ -61,7 +61,7 @@ module Optic.Setter
   set' :: forall s a. ASetter' s a -> a -> s -> s
   set' sa a = unwrap <<< sa (Identity <<< const a)
 
-  sets :: forall p q f s t a b. (Profunctor p, Profunctor q, Settable f) => (p a b -> q s t) -> Optical p q f s t a b
+  sets :: forall p q f s t a b. Profunctor p => Profunctor q => Settable f => (p a b -> q s t) -> Optical p q f s t a b
   sets pab2qst = untaintedDot >>> pab2qst >>> taintedDot
 
   add :: forall s t a. Semiring a => ASetter s t a a -> a -> s -> t
