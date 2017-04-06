@@ -8,7 +8,7 @@ module Optic.Laws.Lens where
   import Prelude (class Eq, (&&), (==))
 
   -- | A valid `Lens` satisfies all three of the following laws.
-  validLens :: forall s a. (Eq a, Eq s) => Lens' s a -> s -> a -> a -> a -> Boolean
+  validLens :: forall s a. Eq a => Eq s => Lens' s a -> s -> a -> a -> a -> Boolean
   validLens l s x y z = getSet l s && setGet l s x && setSet l s y z
 
   -- | If you get a value out, and then set it immediately back,

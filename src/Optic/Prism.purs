@@ -26,7 +26,7 @@ module Optic.Prism
                  , const, not, pure, unit
                  )
 
-  clonePrism :: forall f p s t a b. (Applicative f, Choice p) => APrism  s t a b -> p a (f b) -> p s (f t)
+  clonePrism :: forall f p s t a b. Applicative f => Choice p => APrism  s t a b -> p a (f b) -> p s (f t)
   clonePrism stab = withPrism stab prism
 
   is :: forall s t a b. APrism s t a b -> s -> Boolean
@@ -48,7 +48,7 @@ module Optic.Prism
   only :: forall a. Eq a => a -> Prism' a Unit
   only x = nearly x ((==) x)
 
-  prism :: forall f p s t a b. (Applicative f, Choice p) => (b -> t) -> (s -> Either t a) -> p a (f b) -> p s (f t)
+  prism :: forall f p s t a b. Applicative f => Choice p => (b -> t) -> (s -> Either t a) -> p a (f b) -> p s (f t)
   prism b2t s2Eta pafb = dimap s2Eta (either pure ((<$>) b2t)) (right pafb)
 
   prism' :: forall s a b. (b -> s) -> (s -> Maybe a) -> Prism s s a b
