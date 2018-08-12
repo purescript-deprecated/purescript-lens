@@ -21,7 +21,7 @@ module Optic.Setter
   import Data.Identity (Identity(..))
   import Data.Maybe (Maybe(..))
   import Data.Newtype (unwrap)
-  import Data.Profunctor (lmap, rmap, class Profunctor)
+  import Data.Profunctor (lcmap, rmap, class Profunctor)
 
   import Optic.Internal.Setter (taintedDot, untaintedDot, class Settable)
   import Optic.Types (ASetter(), ASetter'(), Optical(), Setter(), Setting())
@@ -44,7 +44,7 @@ module Optic.Setter
   infixr 4 setJust as ?~
 
   argument :: forall p r a b. Profunctor p => Setter (p b r) (p a r) a b
-  argument = sets lmap
+  argument = sets lcmap
 
   contramapped :: forall f a b. Contravariant f => Setter (f a) (f b) b a
   contramapped = sets (>$<)

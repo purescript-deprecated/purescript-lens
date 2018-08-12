@@ -1,7 +1,7 @@
 module Test.Main where
 
-  import Control.Monad.Eff (Eff)
-  import Control.Monad.Eff.Console (CONSOLE, logShow)
+  import Effect (Effect)
+  import Effect.Console (logShow)
 
   import Optic.Core
 
@@ -43,7 +43,7 @@ module Test.Main where
   succ :: Int -> Int
   succ x = x + 1
 
-  main :: forall r. Eff (console :: CONSOLE | r) Unit
+  main :: Effect Unit
   main = do
     logShow obj                                 -- (Foo 0 true)
     logShow $ _Foo..baz .~ 10 $ obj             -- (Foo 0 10)
