@@ -1,6 +1,6 @@
 {
   "name": "purescript-lens",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "PureScript implementation of Lens",
   "license": "MIT",
   "homepage": "https://github.com/joneshf/purescript-lens",
@@ -23,9 +23,9 @@
     "test": "pulp test"
   },
   "devDependencies": {
-    "pulp": "^11.0.0",
-    "purescript": "^0.11.1",
-    "purescript-psa": "^0.5.0",
-    "rimraf": "^2.6.1"
+    "pulp": "^12.3.0",
+    "purescript": "^0.12.0",
+    "purescript-psa": "^0.7.2",
+    "rimraf": "^2.6.2"
   }
 }
