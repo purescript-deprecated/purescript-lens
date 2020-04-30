@@ -1,8 +1,0 @@
-/.*
-!/.gitignore
-bower_components/
-node_modules/
-output/
-tmp/
-npm-debug.log
-*.tix
