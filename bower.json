@@ -3,17 +3,14 @@
   "description": "PureScript implementation of Lens.",
   "license": "MIT",
   "homepage": "https://github.com/joneshf/purescript-lens",
-  "keywords": [
-    "PureScript",
-    "lens"
-  ],
+  "keywords": ["pursuit-deprecated"],
   "authors": [
     "Hardy Jones <jones3.hardy@gmail.com> (https://github.com/joneshf)",
     "John A. De Goes <john@degoes.net> (http://degoes.net)"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/joneshf/purescript-lens.git"
+    "url": "https://github.com/joneshf/purescript-lens.git"
   },
   "ignore": [
     "**/.*",
